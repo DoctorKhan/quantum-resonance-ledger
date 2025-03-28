@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# pretty-test: A wrapper script for running Go tests with pretty formatting
+# Usage: ./scripts/pretty-test [go test arguments]
+# Example: ./scripts/pretty-test -v ./pkg/simulation
+
+# Get the directory of this script
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+# Run the go test command with the provided arguments and pipe the output to the formatter
+go test "$@" | "$SCRIPT_DIR/go_test_formatter.sh"

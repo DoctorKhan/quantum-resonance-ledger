@@ -1,0 +1,33 @@
+# Binaries for programs and plugins
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Go build cache
+/bin/
+/pkg/
+/vendor/
+
+# Python bytecode
+*.pyc
+*.pyo
+__pycache__/
+
+# Editor/IDE temporary files
+.idea/
+.vscode/
+*.swp
+*.swo
+._*
+tmp/
+/tmp
+.venv/
+
+# OS generated files
+.DS_Store
+
+# Coverage files
+*.out
+*.profraw
+*.profdata

@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Exit immediately if a command exits with a non-zero status.
+set -e
+
+# Check if the first argument is "test"
+if [ "$1" == "test" ]; then
+#  echo "Running Go tests..."
+  # Run Go tests in all subdirectories using the pretty formatter
+  #./scripts/pretty-test ./...
+
+  echo "" # Add a newline for separation
+  echo "Running Python tests..."
+  # Run Python tests using pytest
+  # Ensure PYTHONPATH includes the project root so the import works
+  PYTHONPATH=. pytest test/test_quantum_blockchain_pytest.py
+
+  echo ""
+  echo "All tests completed."
+else
+  echo "Usage: ./run test"
+  exit 1
+fi
+
+exit 0

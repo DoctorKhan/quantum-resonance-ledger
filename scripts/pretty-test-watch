@@ -1,0 +1,55 @@
+#!/bin/bash
+
+# pretty-test-watch: A wrapper script for running Go tests in watch mode with pretty formatting
+# Usage: ./scripts/pretty-test-watch [go test arguments]
+# Example: ./scripts/pretty-test-watch -v ./pkg/simulation
+
+# Get the directory of this script
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+# Colors
+GREEN=$(tput setaf 2)
+YELLOW=$(tput setaf 3)
+CYAN=$(tput setaf 6)
+RESET=$(tput sgr0)
+
+echo -e "${CYAN}Jest-like Watch Mode${RESET}"
+echo -e "${YELLOW}Press Ctrl+C to exit${RESET}"
+echo ""
+
+# Function to run tests
+run_tests() {
+  clear
+  echo -e "${GREEN}Running tests...${RESET}"
+  echo ""
+  go test "$@" | "$SCRIPT_DIR/go_test_formatter.sh"
+  echo ""
+  echo -e "${YELLOW}Watching for file changes...${RESET}"
+}
+
+# Initial test run
+run_tests "$@"
+
+# Watch for file changes
+while true; do
+  # Use find to detect file changes
+  find . -name "*.go" -type f -not -path "*/\.*" | while read -r file; do
+    # Get the last modification time
+    LAST_MOD=$(stat -f "%m" "$file")
+    
+    # Wait for 1 second
+    sleep 1
+    
+    # Get the current modification time
+    CURR_MOD=$(stat -f "%m" "$file")
+    
+    # If the file was modified, run tests
+    if [ "$LAST_MOD" != "$CURR_MOD" ]; then
+      run_tests "$@"
+      break
+    fi
+  done
+  
+  # Sleep to avoid high CPU usage
+  sleep 1
+done
