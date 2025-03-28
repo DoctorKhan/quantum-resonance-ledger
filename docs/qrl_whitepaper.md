@@ -116,7 +116,7 @@ The cost function captures security, performance, and resource usage:
 $$
 H(\Theta)
 \;=\;
-\sum_{j}\;w_j'\,\text{Cost}_j(\Theta)\;+\;\text{Penalty\_UncertaintyRelations}(\Theta).
+\sum_{j}\;w_j'\,\text{Cost}_j(\Theta)\;+\;\text{Penalty\\_UncertaintyRelations}(\Theta).
 $$
 
 Minimizing $H(\Theta)$ drives the network toward optimal parameter configurations.
@@ -143,7 +143,7 @@ $$
 \bigl|\text{Amplitude}[\text{Path}]\bigr|^2.
 $$
 
-In practice, QRL may implement a more classical approximation to these quantum-inspired ideas, but the principle remains: **good histories (low action)** are exponentially more likely, ensuring secure consensus with $\emph{probabilistic finality}$.
+In practice, QRL may implement a more classical approximation to these quantum-inspired ideas, but the principle remains: **good histories (low action)** are exponentially more likely, ensuring secure consensus with *probabilistic finality*.
 
 ### **3.7 Cryptographic Uniqueness Tokens (CUTs) – Foundation for Probabilistic Trust**
 
@@ -234,7 +234,7 @@ The cost function captures security, performance, and resource usage:
 $$
 H(\Theta)
 \;=\;
-\sum_{j}\;w_j'\,\text{Cost}_j(\Theta)\;+\;\text{Penalty\_UncertaintyRelations}(\Theta).
+\sum_{j}\;w_j'\,\text{Cost}_j(\Theta)\;+\;\text{Penalty\\_UncertaintyRelations}(\Theta).
 $$
 
 Minimizing $H(\Theta)$ drives the network toward optimal parameter configurations.
