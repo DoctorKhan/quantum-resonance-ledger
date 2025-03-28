@@ -119,7 +119,7 @@ H(\Theta)
 \sum_{j}\;w_j'\,\text{Cost}_j(\Theta)\;+\;\text{Penalty\_UncertaintyRelations}(\Theta).
 $$
 
-Minimizing $(H)$ drives the network toward optimal parameter configurations.
+Minimizing $H(\Theta)$ drives the network toward optimal parameter configurations.
 
 ### **3.6 Probabilistic Finality and Path Selection Consensus**
 
@@ -135,7 +135,7 @@ $$
 D[\text{Path}],
 $$
 
-where $(S[\text{Path}])$ is an “action” functional, favoring long valid chains, valid blocks, minimal forks, etc. The probability that a given path is canonical:
+where $S[\text{Path}]$ is an “action” functional, favoring long valid chains, valid blocks, minimal forks, etc. The probability that a given path is canonical:
 
 $$
 \text{Probability}[\text{Path}]
@@ -237,7 +237,7 @@ H(\Theta)
 \sum_{j}\;w_j'\,\text{Cost}_j(\Theta)\;+\;\text{Penalty\_UncertaintyRelations}(\Theta).
 $$
 
-Minimizing $(H)$ drives the network toward optimal parameter configurations.
+Minimizing $H(\Theta)$ drives the network toward optimal parameter configurations.
 
 ### **4.6 Token Representation & Spending (Cryptographically-Protected “No-Cloning”)**
 

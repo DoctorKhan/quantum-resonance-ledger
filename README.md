@@ -12,9 +12,9 @@ This repository contains the research implementation and simulation related to t
 QRL introduces several key innovations:
 
 *   **Probabilistic Quantity Conservation:** Relaxes strict transaction ordering, enabling parallel processing for enhanced scalability, while ensuring probabilistic conservation of token quantities.
-*   **Laplacian & D'Alembertian Correction:** Utilizes physics-inspired field-theoretic operators (Laplacian for smoothing, D'Alembertian for spacetime propagation effects) to dynamically enforce and correct quantity imbalances across the network, maintaining ledger integrity probabilistically.
-*   **Bounded Parameter Management:** Models key network parameters (e.g., block size, fees) using probabilistic "wavefunction" envelopes, allowing for dynamic adaptation within defined bounds.
-*   **Hamiltonian Optimization:** Employs a Hamiltonian cost function to represent the network's state "cost," driving dynamic parameter adjustments towards optimal configurations balancing performance, security, and stability.
+*   **Laplacian ($\nabla^2$) & D’Alembertian ($\square$) Correction:** Utilizes physics-inspired field-theoretic operators ($\nabla^2$ for smoothing, $\square$ for spacetime propagation effects) to dynamically enforce and correct quantity imbalances across the network, maintaining ledger integrity probabilistically.
+*   **Bounded Parameter Management:** Models key network parameters (e.g., block size, fees) using probabilistic "wavefunction" envelopes ($\psi$), allowing for dynamic adaptation within defined bounds.
+*   **Hamiltonian Optimization:** Employs a Hamiltonian ($H$) cost function to represent the network's state "cost," driving dynamic parameter adjustments towards optimal configurations balancing performance, security, and stability.
 *   **Quantum-Inspired Uncertainty Relations:** Formalizes inherent trade-offs between network properties (e.g., scalability vs. reliability), guiding balanced optimization.
 *   **Cryptographic Uniqueness Tokens (CUTs):** Implements classically secure tokens guaranteeing uniqueness, providing the cryptographic foundation needed to trust probabilistic quantity conservation and prevent double-spending.
 *   **Path Integral / Probabilistic Consensus:** Explores consensus mechanisms that statistically favor optimal chain histories ("paths" with lower "action"), enabling faster probabilistic finality.
@@ -23,9 +23,7 @@ QRL introduces several key innovations:
 
 ## Project Structure
 
-The repository is now organized to separate Python and Go components:
-
-```
+```shell
 qrl/
 ├── python/                # Python-related code
 │   ├── src/                # Python source code
@@ -59,11 +57,11 @@ The current Go simulation (`go/cmd/simulation/`) demonstrates key aspects of QRL
 
 *   **Network Modeling:** Representation of nodes in a network with configurable latency and fee structures (using `pkg/simulation` or similar).
 *   **Dynamic Parameter Management:** Implementation of parameters with probabilistic bounds and updates driven by Hamiltonian gradients.
-*   **Laplacian Smoothing:** Application of the discrete graph Laplacian to ensure parameter coherence across nodes.
-*   **Hamiltonian Cost Function:** A configurable cost function representing network objectives used for parameter optimization.
+*   **Laplacian Smoothing:** Application of the discrete graph Laplacian ($\nabla^2$) to ensure parameter coherence across nodes.
+*   **Hamiltonian Cost Function:** A configurable cost function ($H$) representing network objectives used for parameter optimization.
 *   **Adaptive Weight Tuning:** Simple feedback mechanism to adjust Hamiltonian weights based on simulated performance.
 *   **Probabilistic Quantity Imbalance (Conceptual):** A simplified model demonstrating how quantity imbalances can be tracked and corrected using Laplacian smoothing.
-*   **(Future):** Integration of D'Alembertian correction, more sophisticated probabilistic consensus, full CUT implementation, and transaction commutator effects are part of the ongoing research and development outlined in the whitepaper.
+*   **(Future):** Integration of D’Alembertian correction ($\square$), more sophisticated probabilistic consensus, full CUT implementation, and transaction commutator effects are part of the ongoing research and development outlined in the whitepaper.
 
 ## Getting Started
 
@@ -130,7 +128,7 @@ This project aims for high code quality and reliability. While striving for rapi
 
 Future development aligns with the phases outlined in the whitepaper, focusing on:
 
-1.  **Enhanced Physics Modeling:** Deeper integration of Path Integral concepts, D'Alembertian dynamics, and potentially transaction commutators.
+1.  **Enhanced Physics Modeling:** Deeper integration of Path Integral concepts, D’Alembertian dynamics ($\square$), and potentially transaction commutators.
 2.  **Blockchain Primitives:** Full implementation of CUTs, block structure, and robust probabilistic consensus mechanisms.
 3.  **Advanced Features:** Cross-chain bridging ("entanglement"), visualization tools, performance benchmarking, and rigorous parameter tuning.
 4.  **Privacy Enhancements:** Exploring ZKPs, HE, or SMPC to protect node state privacy.
