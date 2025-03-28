@@ -13,7 +13,7 @@ if [ "$1" == "test" ]; then
   echo "Running Python tests..."
   # Run Python tests using pytest
   # Ensure PYTHONPATH includes the project root so the import works
-  PYTHONPATH=. pytest test/test_quantum_blockchain_pytest.py
+  PYTHONPATH=. pytest python/test/test_quantum_blockchain_pytest.py
 
   echo ""
   echo "All tests completed."

@@ -1,293 +1,144 @@
 # Quantum Resonance Ledger (QRL)
 
-Production implementation of the quantum-resistant blockchain from the [QRL Whitepaper](docs/qrl_whitepaper.md), featuring:
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+<!-- Optional: Add build status, coverage badges etc. here -->
 
-- **Probabilistic Quantity Conservation** with Laplacian/D'Alembertian operators
-- **Cryptographic Uniqueness Tokens (CUTs)** with zero-knowledge proofs
-- **Hamiltonian-driven parameter optimization**
-- **Path Integral Consensus** with probabilistic finality
-- **Relativistic node modeling** with self-healing balance fields
+**A conceptual framework and simulation for a physics-inspired distributed system designed for extreme scalability and adaptability.**
 
-- **Probabilistic Quantity Conservation** with Laplacian/D'Alembertian correction
-- **Cryptographic Uniqueness Tokens (CUTs)** preventing double-spending
-- **Dynamic parameter management** using uncertainty relations
-- **Path Integral Consensus** for probabilistic finality
-- **Relativistic network modeling** with self-correcting balance fields
+This repository contains the research implementation and simulation related to the **Quantum Resonance Ledger (QRL)**, a novel framework detailed in the [QRL Whitepaper](docs/qrl_whitepaper.md). QRL evolves beyond traditional blockchain limitations by employing principles from statistical mechanics, wave mechanics, and field theory.
+
+## Core QRL Concepts & Features
+
+QRL introduces several key innovations:
+
+*   **Probabilistic Quantity Conservation:** Relaxes strict transaction ordering, enabling parallel processing for enhanced scalability, while ensuring probabilistic conservation of token quantities.
+*   **Laplacian & D'Alembertian Correction:** Utilizes physics-inspired field-theoretic operators (Laplacian for smoothing, D'Alembertian for spacetime propagation effects) to dynamically enforce and correct quantity imbalances across the network, maintaining ledger integrity probabilistically.
+*   **Bounded Parameter Management:** Models key network parameters (e.g., block size, fees) using probabilistic "wavefunction" envelopes, allowing for dynamic adaptation within defined bounds.
+*   **Hamiltonian Optimization:** Employs a Hamiltonian cost function to represent the network's state "cost," driving dynamic parameter adjustments towards optimal configurations balancing performance, security, and stability.
+*   **Quantum-Inspired Uncertainty Relations:** Formalizes inherent trade-offs between network properties (e.g., scalability vs. reliability), guiding balanced optimization.
+*   **Cryptographic Uniqueness Tokens (CUTs):** Implements classically secure tokens guaranteeing uniqueness, providing the cryptographic foundation needed to trust probabilistic quantity conservation and prevent double-spending.
+*   **Path Integral / Probabilistic Consensus:** Explores consensus mechanisms that statistically favor optimal chain histories ("paths" with lower "action"), enabling faster probabilistic finality.
+
+**Disclaimer:** This repository contains a research implementation and simulation environment for exploring QRL concepts. It is **not** a production-ready blockchain.
 
 ## Project Structure
 
-```
-qrl/
-├── cmd/                    # Command-line applications in Go
-│   ├── example/            # Example application showcasing parameter space concepts
-│   └── simulation/         # Simulation application for the full blockchain framework
-├── docs/                   # Documentation files in Markdown format
-│   └── images/             # Images used within the documentation
-├── internal/               # Internal Go packages, not intended for external use
-├── scripts/                # Utility scripts for development and testing
-├── src/                    # Python source code for the core framework logic
-└── test/                   # Test files for both Go and Python components
-```
-=======
-## Project Structure
+The repository is now organized to separate Python and Go components:
 
 ```
 qrl/
-├── cmd/                    # Go command-line applications
-│   ├── example/            # Example Go application for parameter space
-│   └── simulation/         # Example Go application for full simulation
-├── docs/                   # Documentation files (Markdown)
+├── python/                # Python-related code
+│   ├── src/                # Python source code
+│   │   └── quantum_blockchain.py
+│   ├── test/               # Python test files
+│   │   └── test_quantum_blockchain_pytest.py
+│   └── requirements.txt    # Python dependencies
+├── go/                    # Go-related code
+│   ├── cmd/                # Go command-line applications (simulations, examples)
+│   │   ├── simulation/     # Main simulation application in Go
+│   │   └── ...             # Other potential Go applications or examples
+│   ├── internal/           # Go internal packages (used by cmd/, not for external use)
+│   ├── pkg/                # Go packages intended for potential reuse (e.g., simulation core)
+│   ├── go.mod              # Go module definition file
+│   └── go.sum              # Go dependencies file
+├── docs/                   # Documentation files (Markdown, including Whitepaper)
+│   └── qrl_whitepaper.md   # The main QRL Whitepaper
 │   └── images/             # Images used in documentation
-├── internal/               # Go internal packages
-├── scripts/                # Utility scripts
-├── src/                    # Python source code
-└── test/                   # Test files
+├── scripts/                # Utility scripts (testing, building, etc.)
+├── LICENSE                 # License file
+├── README.md               # This file
+└── run                     # Script to run tests
 ```
 
-## Test-Driven Development (TDD)
+*   **Go (`go/`):** The primary language for the simulation environment and command-line tools, leveraging Go's strengths in concurrency and systems programming.
+*   **Python (`python/`):** Used for prototyping core algorithms, data analysis, machine learning experiments related to parameter optimization, or parts of the framework logic less dependent on high concurrency. *[Note: Adjust this description if the Python role is different]*.
 
-This project rigorously adheres to Test-Driven Development (TDD) principles to ensure code quality, reliability, and maintainability.  TDD is applied throughout the development process, guiding the design and implementation of all features.
+## Core Concepts Implemented (Simulation)
 
-**Key TDD Practices:**
+The current Go simulation (`go/cmd/simulation/`) demonstrates key aspects of QRL, including:
 
-1.  **Red-Green-Refactor Cycle**:  The core of our TDD process involves the classic Red-Green-Refactor cycle:
-    *   **Red**:  Start by writing a test that fails. This test defines a specific piece of functionality or behavior that needs to be implemented. Running the test should clearly show that it fails because the functionality is not yet present.
-    *   **Green**: Write the minimum amount of code necessary to make the test pass. The focus at this stage is solely on satisfying the test requirements, not on perfect design or efficiency.
-    *   **Refactor**: Once the test is passing (Green), refactor the code to improve its structure, readability, and efficiency, while ensuring that all tests remain passing. This step helps to clean up the code and prepare it for future extensions without breaking existing functionality.
+*   **Network Modeling:** Representation of nodes in a network with configurable latency and fee structures (using `pkg/simulation` or similar).
+*   **Dynamic Parameter Management:** Implementation of parameters with probabilistic bounds and updates driven by Hamiltonian gradients.
+*   **Laplacian Smoothing:** Application of the discrete graph Laplacian to ensure parameter coherence across nodes.
+*   **Hamiltonian Cost Function:** A configurable cost function representing network objectives used for parameter optimization.
+*   **Adaptive Weight Tuning:** Simple feedback mechanism to adjust Hamiltonian weights based on simulated performance.
+*   **Probabilistic Quantity Imbalance (Conceptual):** A simplified model demonstrating how quantity imbalances can be tracked and corrected using Laplacian smoothing.
+*   **(Future):** Integration of D'Alembertian correction, more sophisticated probabilistic consensus, full CUT implementation, and transaction commutator effects are part of the ongoing research and development outlined in the whitepaper.
 
-2.  **Comprehensive Test Coverage**: We aim for high test coverage to ensure that all parts of the system are thoroughly tested. This includes:
-    *   **Unit Tests**:  Detailed unit tests for individual components and modules to verify their correct behavior in isolation.
-    *   **Integration Tests**: Integration tests to ensure that different components of the system work correctly together and that interactions between them are well-handled.
+## Getting Started
 
-## Core Components
+*(Add prerequisites and build/run instructions here)*
 
-### Spacetime & Node Model
+**Prerequisites:**
 
-This component models the fundamental aspects of a distributed network, representing nodes in a simulated spacetime. It accounts for the physical positions of nodes and the relativistic latencies in communication between them.
+*   Go (version 1.18 or higher recommended)
+*   Python (version 3.8 or higher) - *[Specify if required for core functionality or only analysis]*
+*   [Any other dependencies, e.g., specific libraries]
 
-**Key Features:**
-
-*   **Node Representation**: Nodes are defined by their spatial coordinates (x, y, z) within the simulation space.
-*   **Relativistic Latency**: Communication latency between nodes is calculated based on the distance between them, incorporating relativistic effects to simulate realistic network delays.
-*   **Network Abstraction**: Provides an abstraction for managing a network of nodes and calculating distances and latencies between any two nodes in the network.
-
-**Code Example:**
-
-```go
-// Create a network instance
-network := simulation.NewNetwork()
-
-// Instantiate nodes with specific positions in spacetime
-node1 := simulation.NewNode("node1", 0.0, 0.0, 0.0) // Node at origin
-node2 := simulation.NewNode("node2", 3.0, 0.0, 0.0) // Node at x=3.0
-
-// Incorporate nodes into the network
-network.AddNode(node1)
-network.AddNode(node2)
-
-// Determine the spatial distance between node1 and node2
-distance := network.Distance(0, 1) // Distance between node indices 0 and 1
-
-// Calculate the communication latency between node1 and node2, considering relativistic effects
-latency := network.Latency(0, 1)   // Latency between node indices 0 and 1
-```
-=======
-### Spacetime & Node Model
-
-Represents nodes in a network with positions and latencies:
-
-```go
-// Create a network
-network := simulation.NewNetwork()
-
-// Create nodes at different positions
-node1 := simulation.NewNode("node1", 0.0, 0.0, 0.0)
-node2 := simulation.NewNode("node2", 3.0, 0.0, 0.0)
-
-// Add nodes to the network
-network.AddNode(node1)
-network.AddNode(node2)
-
-// Calculate distance and latency
-distance := network.Distance(0, 1)
-latency := network.Latency(0, 1)
-```
-
-### Event System
-
-The Event System is crucial for managing the simulation's progression. It handles events in chronological order, allowing for asynchronous simulation of network activities.
-
-**Key Features:**
-
-*   **Chronological Event Processing**: Events are processed based on their timestamps, ensuring that the simulation unfolds in a realistic, time-ordered manner.
-*   **Asynchronous Simulation**: Enables the simulation of concurrent activities and interactions within the network, such as transaction creation and propagation, without requiring strict sequential processing.
-*   **Event Queue Management**: Provides an efficient event queue to store, prioritize, and retrieve events for processing.
-
-**Code Example:**
-
-```go
-// Initialize a new event queue to manage simulation events
-eventQueue := simulation.NewEventQueue()
-
-// Construct a new simulation event, e.g., a transaction creation event
-event := simulation.NewEvent(
-    simulation.EventTypeTransactionCreated, // Event type: Transaction creation
-    10.0,                                 // Timestamp: Time at which the event occurs
-    node1,                                // From Node: Node initiating the transaction
-    node2,                                // To Node: Node intended to receive the transaction
-    payload,                              // Payload: Data associated with the event (e.g., transaction details)
-)
-
-// Enqueue the event for processing
-eventQueue.AddEvent(event)
-
-// Event processing loop: Continue as long as there are events in the queue
-for eventQueue.HasEvents() {
-    event := eventQueue.ProcessNextEvent() // Dequeue and retrieve the next event to process
-    // Handle the event: Execute actions based on the event type and associated data
-    // e.g., process transaction, update node state, etc.
-}
-```
-=======
-### Event System
-
-Manages events in chronological order:
-
-```go
-// Create an event queue
-eventQueue := simulation.NewEventQueue()
-
-// Create events
-event := simulation.NewEvent(simulation.EventTypeTransactionCreated, 10.0, node1, node2, payload)
-
-// Add events to the queue
-eventQueue.AddEvent(event)
-
-// Process events
-for eventQueue.HasEvents() {
-    event := eventQueue.ProcessNextEvent()
-    // Handle the event
-}
-```
-
-### Parameter Management
-
-Manages parameters with uncertainty relations:
-
-```go
-// Create a parameter manager
-paramManager := simulation.NewParameterManager()
-
-// Create parameters
-param1 := simulation.NewParameter("param1", 0.0, 10.0)
-param2 := simulation.NewParameter("param2", 0.0, 10.0)
-
-// Add parameters to the manager
-paramManager.AddParameter(param1)
-paramManager.AddParameter(param2)
-
-// Create distributions
-dist1 := simulation.NewUniformDistribution(param1)
-dist2 := simulation.NewNormalDistribution(param2, 5.0, 1.0)
-
-// Set distributions
-paramManager.SetDistribution(param1, dist1)
-paramManager.SetDistribution(param2, dist2)
-
-// Create uncertainty relations
-relation := simulation.NewUncertaintyRelation(param1, param2, 1.0)
-
-// Add relations to the manager
-paramManager.AddUncertaintyRelation(relation)
-
-// Validate uncertainty relations
-valid, violations := paramManager.ValidateUncertaintyRelations()
-```
-
-### Transaction Processing
-
-Manages transactions with receiver-pays model:
-
-```go
-// Create a transaction manager
-txManager := simulation.NewTransactionManager()
-
-// Create a transaction
-tx := simulation.NewTransaction("sender", "receiver", 10.0, 1.0, 0.5)
-
-// Add the transaction to the manager
-txManager.AddTransaction(tx)
-
-// Process the transaction
-txManager.ProcessTransaction(tx)
-```
-
-## Running the Examples
-
-To run the parameter space example:
+**Installation:**
 
 ```bash
-go run cmd/example/main.go
+# Clone the repository
+git clone https://github.com/[your-username]/quantum-resonance-ledger.git qrl
+cd qrl
+
+# Install Go dependencies (if using Go modules)
+cd go
+go mod download
+cd ..
+
+# Install Python dependencies (if applicable)
+pip install -r python/requirements.txt
 ```
 
-To run the full simulation example:
+**Running the Simulation:**
+
+To run the main simulation example (adjust path if needed):
 
 ```bash
-go run cmd/simulation/main.go
+go run go/cmd/simulation/main.go
 ```
+
+*(Add options or configuration details if applicable, e.g., simulation duration, network size)*
 
 ## Running Tests
 
-The project includes a custom test formatter that provides Jest-like output for Go tests:
+This project utilizes Go's testing framework and Python's pytest framework.
+
+**Go Tests:**
 
 ```bash
-# Run tests with pretty formatting
-./scripts/pretty-test ./pkg/simulation
+# Run all Go tests in the project
+go test ./...
 
-# Run tests with verbose output and pretty formatting
-./scripts/pretty-test -v ./pkg/simulation
-
-# Run a specific test with pretty formatting
-./scripts/pretty-test -v ./pkg/simulation -run TestParameterManager
-
-# Run tests with skipped tests
-./scripts/pretty-test -v -short ./pkg/simulation
+# Run tests for a specific Go package (e.g., simulation core)
+go test ./go/pkg/simulation
 ```
 
-The formatter displays test results in a Jest-like format with colored output, making it easier to read and understand test results.
-
-### Watch Mode
-
-The project also includes a watch mode for tests, similar to Jest's watch mode:
+**Python Tests:**
 
 ```bash
-# Run tests in watch mode
-./scripts/pretty-test-watch -v ./pkg/simulation
+# Run Python tests
+./run test
 ```
 
-This will run the tests and then watch for file changes. When a file is modified, the tests will automatically run again.
+## Development Philosophy (Includes TDD)
 
-## Next Steps
+This project aims for high code quality and reliability. While striving for rapid prototyping of complex ideas, Test-Driven Development (TDD) principles (Red-Green-Refactor) are encouraged, particularly for core simulation components, to ensure correctness and maintainability. Comprehensive unit and integration tests are valued.
 
-Future development will focus on:
+## Next Steps / Roadmap
 
-1. **Phase 2: Path Integral & Relativistic Modeling**
-   - Relativistic Latency
-   - Path Integral Core
-   - Integrating Path Integral with Transaction Propagation
-   - Receiver-Pays Fee Model
+Future development aligns with the phases outlined in the whitepaper, focusing on:
 
-2. **Phase 3: Blockchain Components & Consensus**
-   - Advanced Transaction / "No-Cloning" Tokens
-   - Blocks & State
-   - Path Integral Consensus
+1.  **Enhanced Physics Modeling:** Deeper integration of Path Integral concepts, D'Alembertian dynamics, and potentially transaction commutators.
+2.  **Blockchain Primitives:** Full implementation of CUTs, block structure, and robust probabilistic consensus mechanisms.
+3.  **Advanced Features:** Cross-chain bridging ("entanglement"), visualization tools, performance benchmarking, and rigorous parameter tuning.
+4.  **Privacy Enhancements:** Exploring ZKPs, HE, or SMPC to protect node state privacy.
 
-3. **Phase 4: Advanced & Optional Features**
-   - Simulated "Entanglement"
-   - Visualization / Analysis Tools
-   - Performance Benchmarking
-   - Experimentation & Parameter Tuning
+## Contributing
+
+We welcome contributions! Please read our [CONTRIBUTING.md](CONTRIBUTING.md) guidelines for details on how to submit issues, feature requests, and pull requests.
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the `LICENSE` file for details.

@@ -5,7 +5,7 @@ import hashlib
 import networkx as nx
 import time  # For simulating real-world time
 
-from src.quantum_blockchain import QuantumBlockchain, Bridge
+from python.src.quantum_blockchain import QuantumBlockchain, Bridge
 
 @pytest.fixture(scope="class")
 def test_setup(request):
