@@ -4,7 +4,11 @@ import numpy as np
 import hashlib
 import networkx as nx
 
+# Import new classes needed for checks
 from python.src.quantum_blockchain import QuantumBlockchain, Bridge
+from python.src.node import Node
+from python.src.parameters import Parameter
+from python.src.distributions import TruncatedGaussian
 
 @pytest.fixture(scope="class")
 def test_setup(request):
@@ -29,11 +33,42 @@ def test_setup(request):
 @pytest.mark.usefixtures("test_setup")
 class TestQuantumBlockchain:
     def test_initialization(self):
-        """Ensures proper initialization within bounds."""
-        for param in ['block_size', 'fee_rate']:
-            for node in self.chain.network.nodes():
-                value = self.chain.params[param]['value'][node]
-                assert self.chain.params[param]['min'] <= value <= self.chain.params[param]['max']
+        """Ensures proper initialization using Node and Parameter objects."""
+        # Define expected config used in __init__
+        param_configs = {
+            'block_size': {'mean': 1.0, 'std_dev': 0.1, 'min': 0.5, 'max': 2.0},
+            'fee_rate': {'mean': 0.01, 'std_dev': 0.005, 'min': 0.001, 'max': 0.1}
+        }
+        assert len(self.chain.nodes) > 0, "Chain should have nodes" # type: ignore
+
+        for node_id, node in self.chain.nodes.items(): # type: ignore
+            assert isinstance(node, Node)
+            assert node.node_id == node_id
+            # Check initial balance/imbalance
+            assert node.token_balance == 100.0
+            assert node.quantity_imbalance == 0.0
+
+            assert len(node.parameters) == len(param_configs), f"Node {node_id} has wrong number of params"
+            for param_name, config in param_configs.items():
+                param_obj = node.get_parameter(param_name)
+                assert param_obj is not None, f"Node {node_id} missing parameter {param_name}"
+                assert isinstance(param_obj, Parameter)
+                assert param_obj.name == param_name
+
+                dist = param_obj.distribution
+                assert dist is not None, f"Node {node_id} parameter {param_name} has no distribution"
+                assert isinstance(dist, TruncatedGaussian), f"Node {node_id} parameter {param_name} has wrong dist type {type(dist)}"
+
+                # Check distribution parameters match config
+                assert dist.mean == config['mean'], f"{param_name} mean mismatch"
+                assert dist.std_dev == config['std_dev'], f"{param_name} std_dev mismatch"
+                assert dist.min_val == config['min'], f"{param_name} min mismatch"
+                assert dist.max_val == config['max'], f"{param_name} max mismatch"
+
+                # Check initial value (mean) is within bounds (redundant given above checks, but okay)
+                value = node.get_parameter_value(param_name)
+                assert value is not None
+                assert config['min'] <= value <= config['max']
 
     def test_parameter_bounds_dynamic_updates(self):
         """Verifies parameters stay within hard bounds."""

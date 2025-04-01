@@ -111,12 +111,8 @@ $(\Delta \theta_i)$ represents the spread (standard deviation) of parameter $(\t
 
 QRL employs a **Hamiltonian/Cost Function** $H(\Theta)$ to quantify network "cost" and drive parameter optimization towards desirable states, balancing security, performance, and resource efficiency.
 
-The cost function captures security, performance, and resource usage:
-
 $$
-H(\Theta)
-\;=\;
-\sum_{j}\;w_j'\,\text{Cost}_j(\Theta)\;+\;\text{Penalty\\_UncertaintyRelations}(\Theta).
+H(\Theta) = \sum_{j} w_j \cdot \text{Cost}_j(\Theta) + \text{Penalty\_UncertaintyRelations}(\Theta).
 $$
 
 Minimizing $H(\Theta)$ drives the network toward optimal parameter configurations.
@@ -150,17 +146,12 @@ In practice, QRL may implement a more classical approximation to these quantum-i
 **Cryptographic Uniqueness Tokens (CUTs)** become even more critical in QRL's enhanced architecture. CUTs are the **essential cryptographic foundation** that enables trust in probabilistic quantity conservation. By guaranteeing that each token is unique and cannot be double-spent, CUTs provide the underlying security guarantees necessary to confidently relax transaction ordering and embrace probabilistic validation.  CUTs ensure that even with parallel processing and potential minor deviations in local quantity accounting, the fundamental integrity of the token supply and ownership is cryptographically maintained.
 
 - Each token:
-  - Secret key: $(sk)$
-  - Commitment: $(C(sk))$
-- Spending: reveal or prove knowledge of $(sk)$ partially (e.g., zero-knowledge) without allowing duplication:
+  - Secret key: $sk$
+  - Commitment: $C(sk)$
+- Spending: reveal or prove knowledge of $sk$ partially (e.g., zero-knowledge) without allowing duplication:
 
 $$
-\text{Spend}(s)
-\;=\;
-\text{ZKProof}\bigl(
-  \exists\,s':\; h(s')=C(sk)
-  \;\wedge\;\text{prefix}(s')=\rho
-\bigr).
+\text{Spend}(s) = \text{ZKProof}\left(\exists\,s': h(s')=C(sk) \wedge \text{prefix}(s')=\rho\right).
 $$
 
 This ensures one cannot “clone” a token to spend it multiple times.
@@ -227,14 +218,12 @@ $$
 - $(\alpha_i)$: Coefficient controlling Laplacian smoothing.
 - $(\nabla^2_{\text{graph}})$ is the discrete graph Laplacian operator.
 
-### **4.5 Hamiltonian Cost Function $(H(\Theta))$**
+### **4.5 Hamiltonian Cost Function $(H(\Theta))**
 
 The cost function captures security, performance, and resource usage:
 
 $$
-H(\Theta)
-\;=\;
-\sum_{j}\;w_j'\,\text{Cost}_j(\Theta)\;+\;\text{Penalty\\_UncertaintyRelations}(\Theta).
+H(\Theta) = \sum_{j} w_j \cdot \text{Cost}_j(\Theta) + \text{Penalty\_UncertaintyRelations}(\Theta).
 $$
 
 Minimizing $H(\Theta)$ drives the network toward optimal parameter configurations.
@@ -242,17 +231,12 @@ Minimizing $H(\Theta)$ drives the network toward optimal parameter configuration
 ### **4.6 Token Representation & Spending (Cryptographically-Protected “No-Cloning”)**
 
 - Each token:
-  - Secret key: $(sk)$
-  - Commitment: $(C(sk))$
-- Spending: reveal or prove knowledge of $(sk)$ partially (e.g., zero-knowledge) without allowing duplication:
+  - Secret key: $sk$
+  - Commitment: $C(sk)$
+- Spending: reveal or prove knowledge of $sk$ partially (e.g., zero-knowledge) without allowing duplication:
 
 $$
-\text{Spend}(s)
-\;=\;
-\text{ZKProof}\bigl(
-  \exists\,s':\; h(s')=C(sk)
-  \;\wedge\;\text{prefix}(s')=\rho
-\bigr).
+\text{Spend}(s) = \text{ZKProof}\left(\exists\,s': h(s')=C(sk) \wedge \text{prefix}(s')=\rho\right).
 $$
 
 This ensures one cannot “clone” a token to spend it multiple times.
