@@ -1,6 +1,6 @@
 from typing import Dict, List, Set, Optional, Tuple
-from qrl_simulation.parameters import Parameter
-from qrl_simulation.distributions import Distribution # May be needed for type hints or defaults
+from .parameters import Parameter
+from .distributions import Distribution # May be needed for type hints or defaults
 
 class Node:
     """Represents a node in the QRL network simulation."""

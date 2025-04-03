@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "qrl_simulation"
+version = "0.1.0"
+description = "Quantum Resonance Ledger Simulation"
+readme = "README.md" # Optional: assumes a README exists or will be created in ./python
+requires-python = ">=3.8"
+# Add dependencies from requirements.txt if needed here or keep them separate
+# dependencies = [
+#     "numpy",
+#     "scipy", # Example if needed by distributions
+# ]
+
+[tool.setuptools.packages.find]
+where = ["."] # Look for packages in the current directory (./python)
+include = ["qrl_simulation*"] # Include the qrl_simulation package and subpackages
+exclude = ["tests*"] # Exclude the tests directory from the package itself

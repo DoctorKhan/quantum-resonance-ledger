@@ -45,7 +45,8 @@ class TestQuantumBlockchain:
             assert isinstance(node, Node)
             assert node.node_id == node_id
             # Check initial balance/imbalance
-            assert node.token_balance == 100.0
+            # Check initial zero balances as per Node class update
+            assert node.balances == {"QUSD": 0.0, "QRG": 0.0, "Gas": 0.0}
             assert node.quantity_imbalance == 0.0
 
             assert len(node.parameters) == len(param_configs), f"Node {node_id} has wrong number of params"

@@ -1,0 +1,6 @@
+Metadata-Version: 2.4
+Name: qrl_simulation
+Version: 0.1.0
+Summary: Quantum Resonance Ledger Simulation
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown

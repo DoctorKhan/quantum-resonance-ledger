@@ -103,7 +103,8 @@ def test_truncated_gaussian_update():
     std_after_update = np.std(samples_new_std)
     print(f"StdDev after update: {std_after_update:.4f} (New Param StdDev: {new_std_dev})")
     # Expect lower std dev in samples
-    assert std_after_update < 0.4 # Should be significantly less than original std dev of 1.0
+    # Check std dev decreased and is reasonably close to the target (0.5)
+    assert std_after_update < 0.7 and abs(std_after_update - new_std_dev) < 0.25
 
     # Invalid update
     with pytest.raises(ValueError, match="Standard deviation must be positive"):

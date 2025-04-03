@@ -12,32 +12,39 @@ def sample_params():
     return {"fee_rate": p1, "block_size": p2}
 
 def test_node_creation(sample_params):
-    """Tests creating Node objects."""
+    """Tests creating Node objects according to TDD plan."""
     node_id = "NodeA"
-    node = Node(node_id, sample_params)
+    position = (10.0, 20.5)
+    node = Node(node_id, position=position, initial_parameters=sample_params)
 
     assert node.node_id == node_id
-    assert node.token_balance == 100.0 # Default
+    assert node.position == position
+    # Check initial zero balances per TDD plan
+    assert node.balances == {"QUSD": 0.0, "QRG": 0.0, "Gas": 0.0}
     assert node.quantity_imbalance == 0.0 # Default
     assert len(node.neighbors) == 0
     assert len(node.parameters) == 2
     assert node.parameters["fee_rate"] == sample_params["fee_rate"]
     assert node.parameters["block_size"] == sample_params["block_size"]
-    assert str(node) == f"Node(ID: {node_id}, Balance: 100.00, Imbalance: 0.0000)"
+    # Check updated string representation
+    expected_str = f"Node(ID: {node_id}, Pos: {position}, Balances: [QUSD: 0.00, QRG: 0.00, Gas: 0.00], Imbalance: 0.0000)"
+    assert str(node) == expected_str
     assert repr(node) == f"Node('{node_id}')"
 
     # Test creation with no initial params
-    node_no_params = Node("NodeB")
+    node_no_params = Node("NodeB", position=(1, 1)) # Position is optional but good to test
     assert node_no_params.node_id == "NodeB"
+    assert node_no_params.position == (1, 1)
+    assert node_no_params.balances == {"QUSD": 0.0, "QRG": 0.0, "Gas": 0.0}
     assert len(node_no_params.parameters) == 0
 
     # Test invalid creation
     with pytest.raises(ValueError, match="Node ID cannot be empty"):
-        Node("", sample_params)
+        Node("", position=(0,0), initial_parameters=sample_params)
 
 def test_node_add_neighbor(sample_params):
     """Tests adding neighbors."""
-    node = Node("NodeA", sample_params)
+    node = Node("NodeA", position=(0,0), initial_parameters=sample_params)
     node.add_neighbor("NodeB")
     node.add_neighbor("NodeC")
     node.add_neighbor("NodeB") # Add duplicate
@@ -48,7 +55,7 @@ def test_node_add_neighbor(sample_params):
 
 def test_node_parameter_access(sample_params):
     """Tests getting parameter objects and values."""
-    node = Node("NodeA", sample_params)
+    node = Node("NodeA", position=(0,0), initial_parameters=sample_params)
 
     # Get Parameter object
     fee_param = node.get_parameter("fee_rate")
