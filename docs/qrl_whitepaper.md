@@ -81,21 +81,21 @@ QRL integrates physics-inspired dynamics with native functionalities to overcome
 ### **3.1 Releasing the Ordering Constraint: Probabilistic Quantity Conservation Inspired by Relativity**
 
 *(Content largely unchanged from v1.3 - explains the core scalability rationale)*
-At the heart of QRL's scalability breakthrough is the recognition, inspired by special relativity, that enforcing a strict, global time-order on all transactions [...] is fundamentally challenging and often unnecessary. [...] QRL embraces this physical reality by **relaxing the requirement for strict, deterministic transaction ordering**. Instead [...] QRL focuses on ensuring that [...] the *total quantities of tokens* are conserved across the network within defined uncertainty bounds.
--   **Alignment with Physical Reality:** [...] QRL's design aligns more naturally with the spacetime structure of distributed systems.
--   **Parallel Processing and Validation:** [...] unlocks **massive parallelism**.
--   **Reduced Synchronization Overhead:** [...] drastically reduces synchronization costs and latency.
--   **Shift in Focus:** [...] ensuring **causal consistency** [...] and reliably **resolving conflicts**.
--   **Uncertainty Margin for Scalability:** [...] allows for significantly greater processing speed.
+At the heart of QRL's scalability breakthrough is the recognition, inspired by special relativity, that enforcing a strict, global time-order on all transactions [8] is fundamentally challenging and often unnecessary. [9] QRL embraces this physical reality by **relaxing the requirement for strict, deterministic transaction ordering**. Instead [10], QRL focuses on ensuring that [11] the *total quantities of tokens* are conserved across the network within defined uncertainty bounds.
+-   **Alignment with Physical Reality:** QRL's design aligns more naturally with the spacetime structure of distributed systems.
+-   **Parallel Processing and Validation:** [13] unlocks **massive parallelism**.
+-   **Reduced Synchronization Overhead:** drastically reduces synchronization costs and latency.
+-   **Shift in Focus:** ensuring **causal consistency** and reliably **resolving conflicts**.
+-   **Uncertainty Margin for Scalability:** allows for significantly greater processing speed.
 
 ### **3.2 Laplacian and D'Alembertian Correction: Physics-Inspired Balance Enforcement**
 
 *(Content largely unchanged from v1.3 - explains the correction mechanism)*
-To ensure robust probabilistic quantity conservation despite relaxed ordering, QRL employs **Laplacian Smoothing and D'Alembertian Correction**. [...] these operators serve as distributed, self-regulating mechanisms, proactively enforcing and correcting quantity imbalances [...].
--   **Laplacian Smoothing for Local Correction:** [...] probabilistically nudging local views towards network-wide quantity balance [...].
--   **D'Alembertian Operator for Spacetime Propagation Correction:** Inspired by the D'Alembertian operator [...] QRL incorporates correction terms that model the *effects* of finite propagation speed and wave-like dynamics [...].
+To ensure robust probabilistic quantity conservation despite relaxed ordering, QRL employs **Laplacian Smoothing and D'Alembertian Correction**. [18] these operators serve as distributed, self-regulating mechanisms, proactively enforcing and correcting quantity imbalances [19].
+-   **Laplacian Smoothing for Local Correction:** [20] probabilistically nudging local views towards network-wide quantity balance [21].
+-   **D'Alembertian Operator for Spacetime Propagation Correction:** Inspired by the D'Alembertian operator [22] QRL incorporates correction terms that model the *effects* of finite propagation speed and wave-like dynamics [21].
 
-These operators create a dynamically self-correcting system [...] maintaining the fundamental integrity of the ledger through distributed, physics-inspired regulation.
+These operators create a dynamically self-correcting system [19] maintaining the fundamental integrity of the ledger through distributed, physics-inspired regulation.
 
 ### **3.3 Native Function Integration**
 
