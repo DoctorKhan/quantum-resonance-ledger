@@ -1,8 +1,8 @@
 import pytest
 import numpy as np # For potential future use if needed
-from src.node import Node
-from src.parameters import Parameter
-from src.distributions import TruncatedGaussian
+from qrl_simulation.node import Node
+from qrl_simulation.parameters import Parameter
+from qrl_simulation.distributions import TruncatedGaussian
 
 @pytest.fixture
 def sample_params():

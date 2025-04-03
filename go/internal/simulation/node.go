@@ -15,11 +15,12 @@ type Node struct {
 	Position       Position
 	Neighbors      map[string]*Node   // Connections to other nodes
 	LatencyFactors map[string]float64 // Factors affecting communication latency (e.g., link quality)
+	Balances       map[string]float64 // Token balances (e.g., QUSD, QRG, Gas)
 	Inbox          []Event            // Received events, processed during node's turn
 	// Add other fields as needed by the simulation design, e.g.:
 	ProcessedEventCount int // Counter for testing event handling
 
-	// State interface{} // Node-specific state (e.g., ledger, parameters)
+	// State interface{} // Node-specific state (e.g., ledger, parameters) - Consider if Balances replaces part of this
 }
 
 // NewNode creates and initializes a new Node.
@@ -39,6 +40,7 @@ func NewNode(id string, pos Position) *Node {
 		Position:       pos,
 		Neighbors:      make(map[string]*Node),   // Initialize Neighbors map
 		LatencyFactors: make(map[string]float64), // Initialize LatencyFactors map
+		Balances:       make(map[string]float64), // Initialize Balances map
 		Inbox:          make([]Event, 0),         // Initialize Inbox slice
 		// Initialize other fields with sensible defaults, e.g.:
 	}

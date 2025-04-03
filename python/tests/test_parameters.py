@@ -1,7 +1,7 @@
 import pytest
 import numpy as np # For np.isclose
-from src.parameters import Parameter
-from src.distributions import TruncatedGaussian # Use a concrete distribution for testing
+from qrl_simulation.parameters import Parameter
+from qrl_simulation.distributions import TruncatedGaussian # Use a concrete distribution for testing
 
 # Fixture for a common distribution instance
 @pytest.fixture

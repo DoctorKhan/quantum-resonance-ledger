@@ -5,10 +5,10 @@ import hashlib
 import networkx as nx
 
 # Import new classes needed for checks
-from python.src.quantum_blockchain import QuantumBlockchain, Bridge
-from python.src.node import Node
-from python.src.parameters import Parameter
-from python.src.distributions import TruncatedGaussian
+from qrl_simulation.quantum_blockchain import QuantumBlockchain, Bridge
+from qrl_simulation.node import Node
+from qrl_simulation.parameters import Parameter
+from qrl_simulation.distributions import TruncatedGaussian
 
 @pytest.fixture(scope="class")
 def test_setup(request):

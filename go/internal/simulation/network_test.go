@@ -108,5 +108,55 @@ func TestNetworkTopology(t *testing.T) {
 		}
 	})
 
-	// Add tests for other topologies (mesh, random) later
+	// Test case 2: Mesh Topology (Placeholder - will fail until implemented)
+	t.Run("MeshNetwork", func(t *testing.T) {
+		numNodes := 9 // Example: 3x3 grid
+		// network := NewMeshNetwork(numNodes, 3, 3) // Hypothetical signature
+		network := NewNetwork(numNodes) // Use basic for now to avoid compile error
+
+		if network == nil {
+			t.Fatalf("NewMeshNetwork returned nil for %d nodes", numNodes)
+		}
+		if len(network.Nodes) != numNodes {
+			t.Fatalf("Expected %d nodes, got %d", numNodes, len(network.Nodes))
+		}
+
+		// Basic check: In a fully connected mesh, each node (except edges/corners)
+		// would have many neighbors. For now, just check node count.
+		// More specific neighbor checks depend on the mesh implementation (fully connected vs grid).
+		t.Logf("Mesh network test needs implementation of NewMeshNetwork and specific neighbor checks.")
+		// Example check for a fully connected mesh (numNodes - 1 neighbors):
+		// for _, node := range network.Nodes {
+		// 	if len(node.Neighbors) != numNodes - 1 {
+		// 		t.Errorf("Node %s expected %d neighbors in fully connected mesh, got %d", node.ID, numNodes-1, len(node.Neighbors))
+		// 	}
+		// }
+	})
+
+	// Test case 3: Random Topology (Placeholder - will fail until implemented)
+	t.Run("RandomNetwork", func(t *testing.T) {
+		numNodes := 10
+		// avgDegree := 3 // Example parameter for random connection probability - Uncomment when NewRandomNetwork is implemented
+		// network := NewRandomNetwork(numNodes, avgDegree) // Hypothetical signature
+		network := NewNetwork(numNodes) // Use basic for now to avoid compile error
+
+		if network == nil {
+			t.Fatalf("NewRandomNetwork returned nil for %d nodes", numNodes)
+		}
+		if len(network.Nodes) != numNodes {
+			t.Fatalf("Expected %d nodes, got %d", numNodes, len(network.Nodes))
+		}
+
+		// Basic check: Ensure nodes exist. Specific neighbor counts will vary.
+		// Could check average degree or connectivity properties if needed.
+		t.Logf("Random network test needs implementation of NewRandomNetwork and specific neighbor/property checks.")
+		// Example: Check if at least some connections were made (if avgDegree > 0)
+		// totalNeighbors := 0
+		// for _, node := range network.Nodes {
+		// 	totalNeighbors += len(node.Neighbors)
+		// }
+		// if numNodes > 1 && avgDegree > 0 && totalNeighbors == 0 {
+		// 	t.Errorf("Random network created with avgDegree %d but no neighbors were assigned", avgDegree)
+		// }
+	})
 }

@@ -1,6 +1,6 @@
 import pytest
 import numpy as np
-from src.distributions import TruncatedGaussian # Assuming src is importable
+from qrl_simulation.distributions import TruncatedGaussian # Assuming qrl_simulation is importable
 
 def test_truncated_gaussian_creation():
     """Tests valid and invalid creation of TruncatedGaussian."""

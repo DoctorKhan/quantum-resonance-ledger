@@ -1,15 +1,16 @@
-from typing import Dict, List, Set, Optional
-from .parameters import Parameter
-from .distributions import Distribution # May be needed for type hints or defaults
+from typing import Dict, List, Set, Optional, Tuple
+from qrl_simulation.parameters import Parameter
+from qrl_simulation.distributions import Distribution # May be needed for type hints or defaults
 
 class Node:
     """Represents a node in the QRL network simulation."""
 
-    def __init__(self, node_id: str, initial_parameters: Optional[Dict[str, Parameter]] = None):
+    def __init__(self, node_id: str, position: Optional[Tuple[float, float]] = None, initial_parameters: Optional[Dict[str, Parameter]] = None):
         if not node_id:
             raise ValueError("Node ID cannot be empty.")
 
         self.node_id: str = node_id
+        self.position: Optional[Tuple[float, float]] = position # Added position attribute
         # Parameters governing this node's behavior (e.g., fee rate dist)
         self.parameters: Dict[str, Parameter] = initial_parameters if initial_parameters else {}
 
@@ -17,9 +18,9 @@ class Node:
         self.neighbors: Set[str] = set() # IDs of neighboring nodes
 
         # Ledger state (simplified for now)
-        # TODO: Represent balance as a distribution later
-        self.token_balance: float = 100.0 # Default starting balance
-        # TODO: Track imbalance per token type if multiple tokens exist
+        # Balances for different token types (initialized to zero per TDD plan)
+        self.balances: Dict[str, float] = {"QUSD": 0.0, "QRG": 0.0, "Gas": 0.0}
+        # TODO: Track imbalance per token type
         self.quantity_imbalance: float = 0.0
 
         # Simulation state
@@ -55,7 +56,8 @@ class Node:
     # def _handle_..._event(self, event): ...
 
     def __str__(self) -> str:
-        return f"Node(ID: {self.node_id}, Balance: {self.token_balance:.2f}, Imbalance: {self.quantity_imbalance:.4f})"
+        balances_str = ", ".join(f"{token}: {bal:.2f}" for token, bal in self.balances.items())
+        return f"Node(ID: {self.node_id}, Pos: {self.position}, Balances: [{balances_str}], Imbalance: {self.quantity_imbalance:.4f})"
 
     def __repr__(self) -> str:
         return f"Node('{self.node_id}')"

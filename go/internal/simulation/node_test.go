@@ -23,8 +23,29 @@ func TestNodeCreation(t *testing.T) {
 		if node.Position != pos {
 			t.Errorf("Expected node position %+v, got %+v", pos, node.Position)
 		}
-		// Add checks for default values of other fields if applicable
-		// e.g., if node.Neighbors == nil { t.Errorf("Neighbors should be initialized") }
+		if node.Neighbors == nil {
+			t.Errorf("Neighbors map should be initialized, but was nil")
+		}
+		if node.LatencyFactors == nil {
+			t.Errorf("LatencyFactors map should be initialized, but was nil")
+		}
+		if node.Inbox == nil {
+			// Note: Checking for nil slice, not empty slice. NewNode initializes it.
+			t.Errorf("Inbox slice should be initialized, but was nil")
+		}
+		if node.Balances == nil {
+			t.Errorf("Balances map should be initialized, but was nil")
+		} else {
+			// Check initial balances as per TDD plan (Phase 1, 1.1)
+			expectedTokens := []string{"QUSD", "QRG", "Gas"}
+			for _, token := range expectedTokens {
+				if balance, ok := node.Balances[token]; ok && balance != 0.0 {
+					t.Errorf("Expected initial balance for %s to be 0.0, got %f", token, balance)
+				}
+				// We also expect the balance to be implicitly zero if the key doesn't exist yet.
+				// So, if ok is false, it's treated as 0.0, which is correct.
+			}
+		}
 	})
 
 	// Test case 2: Edge Case - Empty ID
@@ -197,6 +218,21 @@ func TestUpdateLatency(t *testing.T) {
 		// Check that the factor wasn't updated to the invalid value
 		if factor, ok := node.LatencyFactors[neighborID]; ok && factor == invalidFactor {
 			t.Errorf("Latency factor was updated to invalid negative value %.2f", factor)
+
+// TestUpdateLatencyFactors tests the probabilistic update mechanism for latency factors.
+// Placeholder: This test corresponds to item 1.1 / TestUpdateLatencyFactors in tdd.md.
+// The actual probabilistic update logic needs to be implemented in node.go first.
+func TestUpdateLatencyFactors(t *testing.T) {
+	t.Skip("Skipping test for probabilistic latency factor updates: Implementation pending.")
+	// TODO: Implement test cases once the probabilistic update logic exists.
+	// Example considerations:
+	// - Seed random number generator for reproducibility.
+	// - Create a node and add neighbors.
+	// - Call the (future) probabilistic update function multiple times.
+	// - Check if factors stay within expected bounds (if any).
+	// - Potentially check statistical properties if the update mechanism is well-defined.
+}
+
 		}
 	})
 
