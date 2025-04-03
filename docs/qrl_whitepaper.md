@@ -1,16 +1,10 @@
-Okay, I will integrate the updated Formalism section (reflecting the multi-function network) into the whitepaper. I'll pay close attention to formatting the equations using standard Markdown/LaTeX syntax that should render well in most viewers (like GitHub Flavored Markdown).
-
-Here is the complete, revised Whitepaper Version 1.4:
-
----
-
 # **Quantum Resonance Ledger (QRL): A Physics-Inspired Framework for Adaptable and Scalable Multi-Function Blockchain Networks**
 
 **Whitepaper – Version 1.4**
 
 **Author:** Rez Khan — *Physicist, Neuroscientist, and Blockchain Architect*
 
-**Date:** March 25, 2025
+**Date:** April 03, 2025
 
 **Contact:** [See LinkedIn or Email]
 
@@ -62,17 +56,17 @@ This whitepaper introduces **QRL**, a blockchain framework designed for **high p
 ### **2.1 Scalability Crisis: The Ordering Bottleneck and the Illusion of Global Simultaneity**
 
 *(Content largely unchanged from v1.3 - still relevant)*
-Deterministic blockchains, requiring strict serial transaction processing and a globally agreed-upon linear order, inherently struggle to scale. [...] This process attempts to create an artificial sense of absolute global time and ordering, which [...] is physically problematic in a distributed system [...]. Forcing this artificial order is computationally expensive and inherently limits speed.
+Deterministic blockchains, requiring strict serial transaction processing and a globally agreed-upon linear order, inherently struggle to scale. This reliance on total ordering stems from the need to prevent double-spending and ensure a consistent ledger state across all nodes [4]. This process attempts to create an artificial sense of absolute global time and ordering, which, as relativity teaches us, is physically problematic in a distributed system where information propagation has finite speed [5]. Forcing this artificial order is computationally expensive and inherently limits speed.
 
 ### **2.2 Security Exposures from Predictability & Complexity**
 
 *(Content largely unchanged from v1.3 - still relevant)*
-Traditional blockchains often rely on static or predictably adjusting parameters [...]. Furthermore, the complexity of general-purpose smart contract platforms creates a vast attack surface.
+Traditional blockchains often rely on static or predictably adjusting parameters (like block size or difficulty adjustment algorithms) [6]. This predictability can be exploited by attackers who can anticipate network conditions. Furthermore, the complexity of general-purpose smart contract platforms creates a vast attack surface.
 
 ### **2.3 Inflexible Parameter Management: Hindrance to Evolution**
 
 *(Content largely unchanged from v1.3 - still relevant)*
-The rigid or slow adjustment of core network parameters [...] impedes adaptation. [...] This inflexibility limits the potential for blockchain networks to dynamically optimize and thrive.
+The rigid or slow adjustment of core network parameters, often requiring hard forks or complex governance processes [7], impedes adaptation. to changing network conditions or evolving application needs This inflexibility limits the potential for blockchain networks to dynamically optimize and thrive.
 
 ### **2.4 Application-Layer Bottlenecks and Risks**
 
