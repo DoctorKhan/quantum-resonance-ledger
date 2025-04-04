@@ -109,8 +109,8 @@ Unlike general-purpose blockchains, QRL integrates specific, high-value function
 Instead of implementing a traditional minted algorithmic stablecoin, QRL introduces the **Wavefunction Stability Index (WSI)**, a dynamically adaptive representation of stable value (e.g., pegged to $1 USD).
 
 -   **Concept:** WSI is not a directly minted token but represents the target value of a *virtual, dynamically weighted basket* of various established stablecoins (e.g., USDC, DAI, EURC) bridged onto QRL (as `qUSDC`, `qDAI`, etc.).
--   **Weights as Wavefunction Parameters:** The target allocation weights ($\theta_{w,i}$) for each constituent stablecoin (`qStablecoin_i`) in the virtual basket are treated as **dynamic QRL parameters**, each governed by its own wavefunction $\Psi_{w,i}(\theta_{w,i})$ and probabilistic bounds, subject to $\sum \theta_{w,i} = 1$.
--   **Hamiltonian Goal:** The QRL Hamiltonian $H(S)$ includes a strong penalty term for deviations of the WSI's calculated market value (based on oracle prices and target weights $\theta_{w,i}$) from its $1 peg.
+-   **Weights as Wavefunction Parameters:** The target allocation weights ($\theta_{w,i}$) for each constituent stablecoin (`qStablecoin_i`) in the virtual basket are treated as **dynamic QRL parameters**, each governed by its own wavefunction $\Psi_{w,i}(\theta_{w,i})$ and probabilistic bounds, subject to $\sum_i \theta_{w,i} = 1$.
+-   **Hamiltonian Goal:** The QRL Hamiltonian $H(S)$ includes a strong penalty term for deviations of the WSI's calculated market value (based on oracle prices and target weights $\theta_{w,i}$) from its $1$ peg.
 -   **Dynamic Rebalancing via Hamiltonian Optimization:** When a constituent stablecoin's oracle price deviates, the Hamiltonian increases. The QRL parameter update mechanism (Eq. 4.4), driven by the Hamiltonian gradient $\nabla_{\theta_w} H$, automatically adjusts the *target weights* $\theta_{w,i}$. It reduces the target weight of underperforming stablecoins and increases the weight of those maintaining their peg, effectively executing an automated "flight-to-quality" for the *target* composition of the index.
 -   **Superior Stability Potential:** The WSI derives stability from both **diversification** across multiple stablecoins and, uniquely, the **active, automated re-weighting** driven by QRL's core optimization dynamics. It aims to be more resilient to the failure or volatility of any single constituent stablecoin compared to static baskets or traditional algorithmic models. The WSI can serve as a highly stable unit of account or value reference within the QRL ecosystem. Linking actual holdings to these target weights can be achieved via protocol incentives or specialized pools.
 
@@ -118,9 +118,7 @@ Instead of implementing a traditional minted algorithmic stablecoin, QRL introdu
 
 All QRL parameters $\theta_i$, governing both network operation and native functions, exist within **Probabilistic Parameter Envelopes**, represented by probability distributions $\Psi_i(\theta_i)$:
 
-$$
-\Psi_i(\theta_i), \quad \text{with Probability Density} \quad P_i(\theta_i) = |\Psi_i(\theta_i)|^2
-$$
+$$ \Psi_i(\theta_i), \quad \text{with Probability Density} \quad P_i(\theta_i) = |\Psi_i(\theta_i)|^2 $$
 
 This ensures smooth adaptation, bounded operation, and statistical predictability.
 
@@ -128,9 +126,7 @@ This ensures smooth adaptation, bounded operation, and statistical predictabilit
 
 QRL formalizes trade-offs between *all* relevant parameters (network, stablecoin, voting, etc.) using **Uncertainty Relations**:
 
-$$
-\Delta \theta_i \cdot \Delta \theta_j \ge C_{ij}
-$$
+$$ \Delta \theta_i \cdot \Delta \theta_j \ge C_{ij} $$
 
 where $\Delta \theta_i$ is the standard deviation of parameter $\theta_i$. This guides balanced optimization across potentially competing objectives.
 
@@ -138,9 +134,7 @@ where $\Delta \theta_i$ is the standard deviation of parameter $\theta_i$. This 
 
 QRL employs an extended **Hamiltonian/Cost Function** $H(S)$ quantifying the cost of the *entire system state* $S = \{\Theta, Q, V, B, Vf, WSI_{state}, ...\}$:
 
-$$
-H(S) = w_{\text{peg}} \cdot \text{Penalty}_{\text{WSI\_Peg}}(S) + \sum_{f \neq \text{Stable}} w_f \cdot \text{Cost}_f(S) + \lambda_{\text{unc}} \cdot \text{Penalty}_{\text{Uncertainty}}(\Theta) + \lambda_Q \cdot \text{Penalty}_{\text{Imbalance}}(Q)
-$$
+$$ H(S) = w_{\text{peg}} \cdot \text{Penalty}_{\text{WSI\_Peg}}(S) + \sum_{f \neq \text{Stable}} w_f \cdot \text{Cost}_f(S) + \lambda_{\text{unc}} \cdot \text{Penalty}_{\text{Uncertainty}}(\Theta) + \lambda_Q \cdot \text{Penalty}_{\text{Imbalance}}(Q) $$
 
 -   Includes a strong penalty $w_{\text{peg}} \cdot \text{Penalty}_{\text{WSI\_Peg}}$ for the WSI value deviating from its peg, dependent on oracle prices and target weights $\theta_w \in \Theta$.
 -   Balances objectives across all native functions via weights $w_f$.
@@ -149,11 +143,8 @@ $$
 
 QRL's **Probabilistic Finality and Path Selection Consensus** mechanisms enhance responsiveness by statistically favoring optimal chain histories (lowest "action" $S[\text{Path}]$).
 
-$$
-\text{Probability}[\text{Path}] \propto \left| \int \mathcal{D}[\text{Path}] \exp\left(\frac{i}{\hbar_{\text{eff}}} S[\text{Path}]\right) \right|^2
-$$
-
-In practice, classical approximations ($P[\text{Path}] \propto \exp(-\beta S[\text{Path}])$) ensure **good histories (low action)** are exponentially favored, guaranteeing secure consensus and conflict resolution with $\emph{probabilistic finality}$.
+$$ \text{Probability}[\text{Path}] \propto \left| \int \mathcal{D}[\text{Path}] \exp\left(\frac{i}{\hbar_{\text{eff}}} S[\text{Path}]\right) \right|^2 $$
+In practice, classical approximations ($P[\text{Path}] \propto \exp(-\beta S[\text{Path}])$) ensure **good histories (low action)** are exponentially favored, guaranteeing secure consensus and conflict resolution with *probabilistic finality*.
 
 ### **3.9 Cryptographic Uniqueness Tokens (CUTs) – Foundation for Trust and Security**
 
@@ -161,9 +152,7 @@ In practice, classical approximations ($P[\text{Path}] \propto \exp(-\beta S[\te
 
 -   Token: Secret key $(sk)$, Commitment $C = \text{Commit}(sk)$.
 -   Spending requires a ZKP proving knowledge of $sk$ for commitment $C$ and validity:
-    $$
-    \text{Spend}(s) = \text{ZKProof}\{(\text{priv } sk) : \text{Commit}(sk)=C \land \text{ValidSpendProof}(s, sk)\}
-    $$
+    $$ \text{Spend}(s) = \text{ZKProof}\{(\text{priv } sk) : \text{Commit}(sk)=C \land \text{ValidSpendProof}(s, sk)\} $$
 
 ### **3.10 Scaling Native Cross-Chain Interactions**
 
@@ -189,9 +178,7 @@ This section formalizes key equations governing the dynamics of the multi-functi
 
 ### **4.1 Parameter Space $(\Theta)$**
 
-$$
-\Theta = \{\theta_{\text{net},...}, \theta_{\text{WSI},w,i}, \theta_{\text{vote},...}, \theta_{\text{bridge},...}, \theta_{\text{verify},...} \}
-$$
+$$ \Theta = \{\theta_{\text{net},...}, \theta_{\text{WSI},w,i}, \theta_{\text{vote},...}, \theta_{\text{bridge},...}, \theta_{\text{verify},...} \} $$
 
 Includes parameters for network health, WSI weights ($\theta_{w,i}$ for stablecoin $i$), and other native functions. Bounded $[\theta_i^{\min}, \theta_i^{\max}]$ with $\Psi_i(\theta_i)$.
 
@@ -199,33 +186,23 @@ Includes parameters for network health, WSI weights ($\theta_{w,i}$ for stableco
 
 Probability density:
 
-$$
-P_i(\theta_i) = |\Psi_i(\theta_i)|^2, \quad \text{normalized as} \quad \int P_i(\theta_i) d\theta_i = 1
-$$
+$$ P_i(\theta_i) = |\Psi_i(\theta_i)|^2, \quad \text{normalized as} \quad \int P_i(\theta_i) d\theta_i = 1 $$
 
 ### **4.3 Uncertainty Relations**
 
 Trade-offs between parameters $\theta_i, \theta_j$:
 
-$$
-\Delta \theta_i \cdot \Delta \theta_j \ge C_{ij}
-$$
+$$ \Delta \theta_i \cdot \Delta \theta_j \ge C_{ij} $$
 
 ### **4.4 Parameter Update Rule (Langevin Dynamics for All Parameters)**
 
 For parameter $\theta_i$ at node $j$:
 
 Continuous form:
-
-$$
-\frac{d\theta_i(j, t)}{dt} = -\eta_i \nabla_{\theta_i} H(S)\big|_{j} + \alpha_i \cdot [\nabla^2_{\text{graph}} \theta_i(t)]_{j} + \sqrt{2D_i} \cdot \xi_i(j, t)
-$$
+$$ \frac{d\theta_i(j, t)}{dt} = -\eta_i \nabla_{\theta_i} H(S)\big|_{j} + \alpha_i \cdot [\nabla^2_{\text{graph}} \theta_i(t)]_{j} + \sqrt{2D_i} \cdot \xi_i(j, t) $$
 
 Discrete form:
-
-$$
-\theta_i(j, t+\Delta t) \approx \theta_i(j, t) - \eta_i \Delta t \cdot \nabla_{\theta_i} H(S)\big|_{j} + \alpha_i \Delta t \cdot [\nabla^2_{\text{graph}} \theta_i(t)]_{j} + \sqrt{2D_i \Delta t} \cdot \mathcal{N}(0,1)
-$$
+$$ \theta_i(j, t+\Delta t) \approx \theta_i(j, t) - \eta_i \Delta t \cdot \nabla_{\theta_i} H(S)\big|_{j} + \alpha_i \Delta t \cdot [\nabla^2_{\text{graph}} \theta_i(t)]_{j} + \sqrt{2D_i \Delta t} \cdot \mathcal{N}(0,1) $$
 
 Where:
 - $H(S)$: Extended Hamiltonian depending on the full system state.
@@ -236,10 +213,7 @@ Where:
 ### **4.5 Extended Hamiltonian Cost Function $H(S)$**
 
 Balances objectives across all functions:
-
-$$
-H(S) = w_{\text{peg}} \cdot \text{Penalty}_{\text{WSI\_Peg}}(S) + \sum_{f} w_f \cdot \text{Cost}_f(S) + \lambda_{\text{unc}} \cdot \text{Penalty}_{\text{Uncertainty}}(\Theta) + \lambda_Q \cdot \text{Penalty}_{\text{Imbalance}}(Q)
-$$
+$$ H(S) = w_{\text{peg}} \cdot \text{Penalty}_{\text{WSI\_Peg}}(S) + \sum_{f} w_f \cdot \text{Cost}_f(S) + \lambda_{\text{unc}} \cdot \text{Penalty}_{\text{Uncertainty}}(\Theta) + \lambda_Q \cdot \text{Penalty}_{\text{Imbalance}}(Q) $$
 
 Where:
 - $\text{Cost}_f(S)$: Cost associated with native function $f$ (Stablecoin peg, Voting health, Bridge security, Verification load, Network congestion).
@@ -251,16 +225,10 @@ Where:
 For token $k$ (QUSD, QRG, Gas) at node $j$:
 
 Continuous reaction-diffusion form:
-
-$$
-\frac{\partial Q_{k,j}(t)}{\partial t} = \gamma_k \cdot [\nabla^2_{\text{graph}} Q_{k}(t)]_{j} + J_{k,j}^{\text{ALL}}(t) + \sqrt{2D_Q} \cdot \xi_{Q}(j, t)
-$$
+$$ \frac{\partial Q_{k,j}(t)}{\partial t} = \gamma_k \cdot [\nabla^2_{\text{graph}} Q_{k}(t)]_{j} + J_{k,j}^{\text{ALL}}(t) + \sqrt{2D_Q} \cdot \xi_{Q}(j, t) $$
 
 Discrete form:
-
-$$
-Q_{k,j}(t+\Delta t) \approx Q_{k,j}(t) + \gamma_k \Delta t \cdot [\nabla^2_{\text{graph}} Q_{k}(t)]_{j} + \Delta t \cdot J_{k,j}^{\text{ALL}}(t) + \sqrt{2D_Q \Delta t} \cdot \mathcal{N}(0,1)
-$$
+$$ Q_{k,j}(t+\Delta t) \approx Q_{k,j}(t) + \gamma_k \Delta t \cdot [\nabla^2_{\text{graph}} Q_{k}(t)]_{j} + \Delta t \cdot J_{k,j}^{\text{ALL}}(t) + \sqrt{2D_Q \Delta t} \cdot \mathcal{N}(0,1) $$
 
 Where:
 - $J_{k,j}^{\text{ALL}}(t) = \text{LocalTransactionEffects}_{k,j}^{\text{ALL}}(t) / \Delta t$: Net rate of quantity change from *all* native transaction types at node $j$.
@@ -271,15 +239,10 @@ Where:
 
 Incorporating wave-like dynamics (e.g., damping term proportional to temporal change):
 
-$$
-\frac{\partial^2 Q_{k,j}}{\partial t^2} + \beta_k \cdot \frac{\partial Q_{k,j}}{\partial t} = c_{\text{eff}}^2 \cdot [\nabla^2_{\text{graph}} Q_{k}]_{j} + \text{Source/Noise Terms}
-$$
+$$ \frac{\partial^2 Q_{k,j}}{\partial t^2} + \beta_k \cdot \frac{\partial Q_{k,j}}{\partial t} = c_{\text{eff}}^2 \cdot [\nabla^2_{\text{graph}} Q_{k}]_{j} + \text{Source/Noise Terms} $$
 
 Simplified discrete update with damping:
-
-$$
-Q_{k,j}(t+\Delta t) \approx Q_{k,j}(t) + (1 - \delta_k \Delta t) \cdot [Q_{k,j}(t) - Q_{k,j}(t-\Delta t)] + \gamma_k' \Delta t \cdot [\nabla^2_{\text{graph}} Q_{k}(t)]_{j} + ...
-$$
+$$ Q_{k,j}(t+\Delta t) \approx Q_{k,j}(t) + (1 - \delta_k \Delta t) \cdot [Q_{k,j}(t) - Q_{k,j}(t-\Delta t)] + \gamma_k' \Delta t \cdot [\nabla^2_{\text{graph}} Q_{k}(t)]_{j} + ... $$
 
 Where:
 - $\delta_k$: Damping coefficient.
@@ -374,3 +337,9 @@ QRL offers a path to blockchain networks that are **orders of magnitude more sca
 20. Kloeden, P. E., & Platen, E. (2011). *Numerical solution of stochastic differential equations*. Springer Science & Business Media.
 21. Gallavotti, G. (2014). *Foundations of fluid dynamics*. Springer Science & Business Media.
 22. Ray, S., & Ukil, A. (2011). Quantum-inspired evolutionary algorithms – a survey. *Engineering Applications of Artificial Intelligence*, *24*(8), 1264-1277.
+
+---
+
+## **11. Disclaimer**
+
+This document is provided for informational purposes only and does not constitute legal or financial advice. All opinions, information, and forecasts included herein are subject to change. Readers should conduct their own due diligence and consult professional advisors before making any decisions related to the concepts described.
