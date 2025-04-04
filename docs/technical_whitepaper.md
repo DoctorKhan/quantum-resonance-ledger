@@ -1,6 +1,6 @@
 # **Quantum Resonance Ledger (QRL): A Physics-Inspired Framework for Adaptable and Scalable Multi-Function Blockchain Networks**
 
-**Whitepaper – Version 1.5**
+**Whitepaper – Version 1.6**
 
 **Author:** Rez Khan — *Physicist, Neuroscientist, and Blockchain Architect*
 
