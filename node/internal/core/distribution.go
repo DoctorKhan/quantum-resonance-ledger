@@ -1,8 +1,8 @@
-package simulation
+package core
 
 import (
-	// Needed for sampling
-	"fmt" // For potential errors/logs
+	"fmt"       // For potential errors/logs
+	"math/rand" // Needed for sampling
 )
 
 // --- Truncated Gaussian Distribution ---
@@ -39,11 +39,19 @@ func (d *TruncatedGaussian) Type() string {
 }
 
 // Sample draws a sample from the truncated Gaussian distribution.
-// Placeholder implementation - returns midpoint to satisfy bounds check.
+// Uses rejection sampling.
 func (d *TruncatedGaussian) Sample() float64 {
-	// TODO: Implement actual truncated Gaussian sampling logic using d.mean, d.stdDev.
-	// For now, return the midpoint to pass the bounds test.
-	return d.Min + (d.Max-d.Min)/2.0
+	for {
+		// Generate a sample from the untruncated normal distribution
+		// rand.NormFloat64() produces random numbers with mean 0 and stddev 1.
+		sample := d.mean + d.stdDev*rand.NormFloat64()
+
+		// Check if the sample is within the desired bounds
+		if sample >= d.Min && sample <= d.Max {
+			return sample // Accept the sample
+		}
+		// If not within bounds, loop again (reject the sample)
+	}
 }
 
 // Mean returns the configured mean of the distribution.

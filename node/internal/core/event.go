@@ -1,4 +1,4 @@
-package simulation
+package core
 
 import (
 	"fmt"  // For Printf in placeholder Execute

@@ -1,4 +1,4 @@
-module github.com/khan/qrib
+module quantum-resonance-ledger/node
 
 go 1.22.5
 

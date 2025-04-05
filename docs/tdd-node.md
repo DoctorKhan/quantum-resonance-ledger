@@ -10,7 +10,7 @@ To ensure the reliability, correctness, and robustness of the **operational Go Q
 
 This plan covers the Go packages responsible for the core node logic, primarily within:
 
--   `go/internal/simulation` (Note: While named "simulation" for historical reasons, this package contains core node logic, not just simulation components).
+-   `node/internal/core` (This package contains the core logic for the QRL node).
 -   Bridging, WSI, voting, and verification primitives as defined in the **multi-function implementation plan**.
 
 ## TDD Principles
@@ -32,14 +32,16 @@ We will adhere to the following TDD principles:
 
 *(Focus: Basic building blocks, parameters, events, cryptography)*
 
-**1.1 Node & Network Primitives:**
-    *   `TestNodeInitialization`: Verify correct initialization of node state (ID, initial parameters, zero balances).
-    *   `TestNetworkRepresentation`: (If applicable) Test basic network state management within a node (peer connections, etc.).
-    *   `TestLatencyCalculation`: Test calculation of communication latency based on node properties or network conditions (relevant for message passing).
+**1.1 Core Data Structures & Configuration:**
+    *   `TestNodeConfigLoading`: Verify loading node configuration (keys, network settings, etc.).
+    *   `TestPeerRepresentation`: Test data structures for representing network peers (ID, address, status).
+    *   `TestPositionStruct`: Verify the Position struct (if used for physical modeling).
 
-**1.2 Event System (if applicable for internal node logic):**
-    *   `TestEventCreation`: Test creating different internal event types (e.g., ParameterUpdateTrigger, MessageReceived).
-    *   `TestEventHandling`: Verify correct handler execution for internal events.
+**1.2 P2P Networking Primitives:**
+    *   `TestPeerConnection`: Test establishing a basic connection to a peer (mocked).
+    *   `TestPeerDiscovery`: Test mechanisms for finding other nodes on the network (e.g., bootstrap nodes, DHT).
+    *   `TestMessageSerialization`: Test encoding/decoding of P2P messages (handshake, tx propagation, block propagation).
+    *   `TestMessageHandler`: Test routing incoming P2P messages to correct handlers.
 
 **1.3 Parameter Management & Distributions:**
     *   `TestParameterInitialization`: Verify correct setup of node parameters with names, distributions (TruncatedGaussian, etc.), and bounds.
@@ -66,18 +68,21 @@ We will adhere to the following TDD principles:
 
 *(Focus: Implementing the core physics-inspired mechanics within the node)*
 
-**2.1 Relativistic Latency Effects (if modeled directly in node):**
-    *   `TestGammaCalculation`: Test Lorentz factor `γ` calculation if used.
-    *   `TestObservedTimeCalculation`: Test time dilation effects on message timestamps or event processing if applicable.
+**2.1 Core State Management:**
+    *   `TestStateDB_Initialization`: Test initializing the state database (e.g., key-value store).
+    *   `TestStateDB_ReadWrite`: Test basic read/write operations for account balances, nonces, contract storage (if applicable).
+    *   `TestStateTransition_Basic`: Test applying a simple transaction (e.g., transfer) to the state.
 
-**2.2 Path Integral Core Logic (as applied to node decision-making):**
-    *   `TestActionCalculation`: Test calculating the action `S` for potential state transitions or operations, including relevant cost terms (latency, fees, security, validity, uncertainty penalties, native function costs like WSI peg deviation).
-    *   `TestAmplitudeCalculation`: Test calculating transition amplitudes from actions.
-    *   `TestProbabilityCalculation`: Test calculating probabilities from amplitudes.
+**2.2 Consensus Engine Primitives (Path Integral / Probabilistic):**
+    *   `TestActionCalculation`: Test calculating the action `S` for blocks or state transitions, incorporating relevant cost terms (fees, validity, native function costs like WSI peg deviation, Hamiltonian terms).
+    *   `TestProbabilityCalculation`: Test calculating probabilities for blocks/forks based on action `S`.
+    *   `TestForkChoiceRule`: Test the node's logic for selecting the canonical chain based on path probabilities.
 
-**2.3 Monte Carlo Decision Making (if used for path selection/consensus):**
-    *   `TestMonteCarloSampling`: Test the core MC sampling algorithm (e.g., Metropolis-Hastings) used for decision-making.
-    *   `TestAcceptanceCriteria`: Test the acceptance logic within the MC sampler.
+**2.3 Transaction Pool:**
+    *   `TestTxPool_AddTransaction`: Test adding valid transactions to the pool.
+    *   `TestTxPool_RemoveTransaction`: Test removing transactions (e.g., when included in a block).
+    *   `TestTxPool_Validation`: Test validation rules applied when adding transactions (signature, nonce, balance).
+    *   `TestTxPool_Prioritization`: Test transaction prioritization logic (e.g., by fee).
 
 **2.4 Extended Hamiltonian Calculation:**
     *   `TestHamiltonianComponentCalculation`: Test calculating individual cost terms relevant to the node's operation (network costs, WSI stability penalty, voting costs, bridging costs, verification costs).
@@ -130,31 +135,32 @@ We will adhere to the following TDD principles:
     *   `TestQSD_QRGInteraction_FeeSink`: Test mechanism for using stability fees to potentially interact with QRG (e.g., marking fees for buy/burn).
 
 
-### Phase 4: Integration, Consensus & System-Level
+### Phase 4: P2P, Consensus & Integration
 
-*(Focus: Interactions between components, consensus participation, state management)*
+*(Focus: Interactions between P2P layer, consensus engine, transaction pool, and state management)*
 
-**4.1 Integrated Transaction Processing:**
-    *   `TestTxValidation_AllTypes`: Ensure node validation logic correctly handles all transaction types (WSI updates, votes, bridge ops, anchors, transfers).
-    *   `TestStateUpdate_AllTypes`: Verify processing transactions correctly updates the node's local state (balances, vote tallies, bridge state, anchor data, `Q` field).
+**4.1 P2P Message Handling & Propagation:**
+    *   `TestTxPropagation`: Test broadcasting new transactions to peers and receiving/validating transactions from peers.
+    *   `TestBlockPropagation`: Test broadcasting new blocks and receiving/validating blocks from peers.
+    *   `TestSyncProtocol`: Test the block synchronization mechanism with peers.
 
-**4.2 Consensus Participation:**
-    *   `TestConsensusMessageHandling`: Test processing consensus messages from peers.
-    *   `TestForkResolutionLogic`: Test the node's logic for contributing to and resolving forks based on path integral probabilities.
-    *   `TestConsensus_DoubleSpendingPrevention`: Verify node logic prevents inclusion/validation of double spends.
-    *   `TestConsensus_ParameterConvergence`: Test participation in achieving consensus on dynamic parameters (`Θ`), including WSI weights and bridging parameters.
+**4.2 Consensus Engine Integration:**
+    *   `TestBlockProposal`: Test the process of creating a new block proposal (selecting transactions from TxPool, calculating state root).
+    *   `TestBlockValidation`: Test validating incoming blocks (header, transactions, state root, consensus rules).
+    *   `TestForkChoiceIntegration`: Test how the consensus engine interacts with the fork choice rule based on incoming blocks/messages.
+    *   `TestConsensus_ParameterConvergence`: Test participation in achieving consensus on dynamic parameters (`Θ`) propagated via blocks/messages.
+    *   `TestConsensus_NativeFunctionIntegration`: Test how consensus handles state transitions related to native functions (WSI updates, QSD operations, votes, bridge state changes, verification anchors).
 
-**4.3 State Management:**
-    *   `TestStateConsistency`: Verify internal consistency of the node's state components.
-    *   `TestStateStorageRetrieval`: Test efficient storage and retrieval of node state.
-    *   `TestStateUpdate_Bridging`: Verify state updates for bridging operations, including inventory and netting flows.
-    *   `TestStateUpdate_Verification`: Verify state updates for anchored verification proofs.
+**4.3 State & Transaction Pool Integration:**
+    *   `TestStateUpdate_OnBlockImport`: Verify state is correctly updated when a new block is imported and finalized.
+    *   `TestTxPool_UpdateOnBlock`: Verify TxPool removes transactions included in a newly imported block.
+    *   `TestStateConsistency`: Perform checks for state consistency after processing sequences of blocks.
 
 ## Implementation Notes
 
--   Start with the tests for `distribution.go` as planned.
+-   Start with foundational tests in `node/internal/core` (e.g., distributions, parameters, CUTs).
 -   Proceed through the phases, writing failing tests first for each piece of functionality.
 -   Use Go's built-in `testing` package.
 -   Employ mocks/stubs for external dependencies (like network peers or oracle feeds) during unit testing.
 -   Integration tests will be crucial in later phases to test interactions between components.
--   Continuously run tests using `go test ./...` or targeted package tests.
+-   Continuously run tests using `go test ./...` within the `node/` directory or targeted package tests (e.g., `go test ./internal/core/...`).
