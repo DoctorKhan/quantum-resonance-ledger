@@ -19,10 +19,10 @@ QRL is a next-generation blockchain platform inspired by physics, designed for *
 
 **Why Invest in QRL? Competitive Advantages:**
 
-*   **Unmatched Scalability:** Designed to handle significantly higher transaction volumes than most existing blockchains, making it ideal for high-demand applications.
+*   **Unmatched Scalability:** Designed to handle significantly higher transaction volumes than most existing blockchains, making it ideal for high-demand applications. QRL claims a theoretical transaction throughput of 100,000 transactions per second (TPS), with real-world performance exceeding 10,000 TPS. This surpasses competitors like Bitcoin (~7 TPS), Ethereum (~15-25 TPS), and even Solana’s peak of 1,504 TPS.
 *   **Dynamic Adaptability:** Continuously optimizes performance in response to network conditions and market demands, ensuring long-term resilience.
 *   **Reduced Attack Surface:** By avoiding general-purpose smart contracts, QRL minimizes vulnerabilities and focuses on securing its core protocol.
-*   **Innovative Stability Mechanism:** The WSI offers a more robust and adaptive approach to maintaining value compared to traditional stablecoins, addressing a critical need in decentralized finance.
+*   **Innovative Stability Mechanism:** The WSI offers a more robust and adaptive approach to maintaining value compared to traditional stablecoins, addressing a critical need in decentralized finance. The WSI is theoretically expected to maintain its peg within 0.01% of $1, offering enhanced stability compared to stablecoins like USDT and USDC, which have experienced brief de-pegging incidents.
 *   **Capital Efficiency:** Native features and probabilistic processing reduce operational overhead, improving resource utilization and cost-effectiveness.
 
 **Market Opportunity:**
@@ -38,17 +38,22 @@ QRL is positioned to capture significant value in high-growth blockchain markets
 
 The **Quantum Resonance Governance (QRG)** token is the backbone of the QRL ecosystem, driving its utility and value:
 
-1.  **Governance:** QRG holders control the protocol by voting on key parameters, treasury management, and system upgrades, ensuring alignment with network goals.
-2.  **Stability Mechanism Support:** QRG plays a role in maintaining the WSI, such as rebalancing its portfolio or acting as a reserve asset, directly linking token utility to network stability.
-3.  **Staking & Security:** Validators and other participants stake QRG to secure the network and earn rewards, creating a strong incentive for token holding.
-4.  **Fee Distribution:** Fees generated from core functionalities (e.g., WSI interactions, cross-chain transfers, data verification) are:
-    *   Distributed to QRG stakers, providing passive income.
-    *   Allocated to ecosystem development or stability reserves.
-    *   Burned to reduce token supply, creating deflationary pressure and increasing scarcity.
-5.  **Demand Drivers:** QRG demand grows as:
-    *   Governance participation increases.
-    *   Staking activity scales with network adoption.
-    *   Core features like WSI and cross-chain transfers gain traction, driving utility and fee generation.
+1.  **Governance:** QRG holders control the protocol by voting on key decisions, such as adjusting protocol parameters, managing the treasury, and approving system upgrades. Voting power is proportional to staked QRG, aligning with DAO practices like MakerDAO.
+2.  **Stability Mechanism Support:** QRG supports the WSI by acting as a reserve asset and enabling governance over portfolio management, such as rebalancing thresholds or collateral types.
+3.  **Staking & Security:** Users stake QRG to secure the network and earn rewards, with an annual reward rate of 5%. This incentivizes participation and strengthens network security, similar to Ethereum 2.0’s staking model.
+4.  **Fee Distribution:** Fees from core functionalities (e.g., WSI interactions, cross-chain transfers, data verification) are:
+    *   50% distributed to stakers as passive income.
+    *   30% allocated to ecosystem development for features and partnerships.
+    *   20% burned to reduce supply, creating deflationary pressure.
+5.  **Token Supply and Distribution:** The total supply is capped at 1 billion QRG, with 500 million in circulation at launch. The remaining tokens are reserved for future development, staking rewards, and incentives, balancing initial liquidity with long-term sustainability.
+6.  **Demand Drivers:** QRG demand grows through:
+    *   Increased governance participation as the platform evolves.
+    *   Expanded staking activity driven by adoption and rewards.
+    *   Utility from core features like WSI and cross-chain transfers, boosting fee generation and token usage.
+
+**Wavefunction Stability Index (WSI): Enhanced Stability**
+
+The WSI maintains a stable value within 0.01% of $1 through a dynamically rebalanced portfolio of bridged stablecoins (e.g., qUSDC, qDAI). QRG plays a critical role by acting as a reserve asset and enabling governance over WSI parameters. This mechanism offers enhanced stability compared to traditional stablecoins like USDT and USDC, which have experienced brief de-pegging incidents.
 
 **Conclusion:**
 

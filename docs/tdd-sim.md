@@ -140,6 +140,22 @@ This document outlines the TDD strategy for developing the Quantum Resonance Led
 *   `TestVerification_Efficiency`: Measure storage cost and transaction cost/throughput for anchoring.
 *   `TestVerification_HamiltonianLink`: Test incorporating verification load/cost metrics into `Cost_Verify(S)`.
 
+**3.5 Quantum Stable Dollar (QSD) Mechanism:**
+    *   `TestQSD_ParameterInitialization`: Test setting initial QSD parameters (`θ_collateral_ratio`, `θ_stability_fee`, `θ_liquidation_penalty`) within bounds.
+    *   `TestQSD_MintingSimulation`: Simulate users locking collateral (CUTs) and minting QSD, verifying collateral ratio checks and state updates (debt, collateral tracking).
+    *   `TestQSD_BurningSimulation`: Simulate users burning QSD and redeeming collateral, verifying state updates.
+    *   `TestQSD_StabilityFeeDynamics`: Simulate the accrual of stability fees over time based on `θ_stability_fee`.
+    *   `TestQSD_LiquidationTriggerSimulation`: Simulate collateral price drops (via oracle updates) and verify correct triggering of liquidations based on `θ_collateral_ratio`.
+    *   `TestQSD_LiquidationProcessSimulation`: Simulate the basic liquidation process (marking vaults, applying penalty). (Auction simulation might be Phase 4/5).
+    *   `TestQSD_ParameterUpdateDynamics`: Test the update of QSD parameters (`θ_collateral_ratio`, `θ_stability_fee`, etc.) via the parameter update rule (Eq. 4.4) driven by relevant Hamiltonian terms (QSD peg deviation, collateral risk).
+    *   `TestQSD_HamiltonianLink`: Verify QSD-related terms (peg deviation penalty, collateral risk penalty) correctly influence the overall Hamiltonian $H(S)$ and its gradient $
+abla H$.
+    *   `TestQSD_WSIInteractionSimulation`: Simulate scenarios where the WSI value influences QSD risk assessment or Hamiltonian terms.
+    *   `TestQSD_QRGInteractionSimulation`: Simulate fee sink mechanisms (burning QSD fees) or basic surplus/debt auction triggers involving QRG.
+    *   `TestQSD_PegStabilitySimulation`: Design scenarios (collateral crashes, demand shocks) and assert QSD peg stability mechanisms (arbitrage incentives, liquidations, dynamic parameter adjustments) function as expected. Measure peg deviation over time.
+    *   `TestQSD_QFieldUpdate`: Verify minting, burning, and fee payments correctly update the quantity imbalance field `Q` for QSD and collateral assets.
+
+
 ---
 
 **Phase 4: Integration, Consensus & System-Level - Tests**

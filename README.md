@@ -1,4 +1,4 @@
-See [executive summary](docs/executive_summary.md).
+Read the [white paper](docs/whitepaper.md).
 
 # Quantum Resonance Ledger (QRL)
 
@@ -7,7 +7,7 @@ See [executive summary](docs/executive_summary.md).
 
 **A conceptual framework and simulation for a physics-inspired distributed system designed for extreme scalability and adaptability.**
 
-This repository contains the research implementation and simulation related to the **Quantum Resonance Ledger (QRL)**, a novel framework detailed in the [technical whitepaper](docs/technical_whitepaper.md). QRL evolves beyond traditional blockchain limitations by employing principles from statistical mechanics, wave mechanics, and field theory.
+This repository contains the research implementation and simulation related to the **Quantum Resonance Ledger (QRL)**, a novel framework detailed in the [technical yellowpaper](docs/yellowpaper.md). QRL evolves beyond traditional blockchain limitations by employing principles from statistical mechanics, wave mechanics, and field theory.
 
 ## Core QRL Concepts & Features
 

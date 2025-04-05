@@ -79,6 +79,34 @@ func TestNodeCreation(t *testing.T) {
 	// Add more test cases as needed based on the Node struct definition
 }
 
+func TestNodeInitialization(t *testing.T) {
+	nodeID := "test-node"
+	position := Position{X: 1.0, Y: 2.0, Z: 3.0}
+	node := NewNode(nodeID, position)
+
+	if node == nil {
+		t.Fatalf("NewNode returned nil")
+	}
+	if node.ID != nodeID {
+		t.Errorf("Expected ID '%s', got '%s'", nodeID, node.ID)
+	}
+	if node.Position != position {
+		t.Errorf("Expected position %+v, got %+v", position, node.Position)
+	}
+	if node.Neighbors == nil || len(node.Neighbors) != 0 {
+		t.Errorf("Expected empty Neighbors map, got %+v", node.Neighbors)
+	}
+	if node.LatencyFactors == nil || len(node.LatencyFactors) != 0 {
+		t.Errorf("Expected empty LatencyFactors map, got %+v", node.LatencyFactors)
+	}
+	if node.Balances == nil || len(node.Balances) != 0 {
+		t.Errorf("Expected empty Balances map, got %+v", node.Balances)
+	}
+	if node.Inbox == nil || len(node.Inbox) != 0 {
+		t.Errorf("Expected empty Inbox slice, got %+v", node.Inbox)
+	}
+}
+
 func TestDistanceCalculation(t *testing.T) {
 	node1 := NewNode("node-1", Position{X: 0, Y: 0, Z: 0})
 	node2 := NewNode("node-2", Position{X: 3, Y: 4, Z: 0}) // Distance should be 5
