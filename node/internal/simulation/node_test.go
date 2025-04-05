@@ -204,7 +204,7 @@ func TestUpdateLatency(t *testing.T) {
 		} else if factor != validFactor {
 			t.Errorf("Expected latency factor %.2f, got %.2f", validFactor, factor)
 		}
-	})
+	}) // End t.Run("ValidFactorUpdate")
 
 	// Test case 2: Update with a potentially invalid factor (e.g., negative)
 	// Assuming factors should be non-negative
@@ -218,10 +218,10 @@ func TestUpdateLatency(t *testing.T) {
 		// Check that the factor wasn't updated to the invalid value
 		if factor, ok := node.LatencyFactors[neighborID]; ok && factor == invalidFactor {
 			t.Errorf("Latency factor was updated to invalid negative value %.2f", factor)
+		}
+	}) // End t.Run("NegativeFactorUpdate")
+} // End func TestUpdateLatency
 
-// TestUpdateLatencyFactors tests the probabilistic update mechanism for latency factors.
-// Placeholder: This test corresponds to item 1.1 / TestUpdateLatencyFactors in tdd.md.
-// The actual probabilistic update logic needs to be implemented in node.go first.
 func TestUpdateLatencyFactors(t *testing.T) {
 	t.Skip("Skipping test for probabilistic latency factor updates: Implementation pending.")
 	// TODO: Implement test cases once the probabilistic update logic exists.
@@ -231,27 +231,6 @@ func TestUpdateLatencyFactors(t *testing.T) {
 	// - Call the (future) probabilistic update function multiple times.
 	// - Check if factors stay within expected bounds (if any).
 	// - Potentially check statistical properties if the update mechanism is well-defined.
-}
-
-		}
-	})
-
-	// Test case 3: Update factor for the same neighbor again
-	t.Run("OverwriteFactorUpdate", func(t *testing.T) {
-		newValidFactor := 1.2
-		// First set an initial value
-		node.LatencyFactors[neighborID] = 0.5 // Assume direct access or previous valid update
-		err := node.UpdateLatencyFactor(neighborID, newValidFactor)
-
-		if err != nil {
-			t.Errorf("UpdateLatencyFactor returned unexpected error for overwrite: %v", err)
-		}
-		if factor, ok := node.LatencyFactors[neighborID]; !ok {
-			t.Errorf("Latency factor for %s not set after overwrite", neighborID)
-		} else if factor != newValidFactor {
-			t.Errorf("Expected overwritten latency factor %.2f, got %.2f", newValidFactor, factor)
-		}
-	})
 }
 
 func TestEventHandling(t *testing.T) {

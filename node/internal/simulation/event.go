@@ -1,12 +1,16 @@
 package simulation
 
-import "time" // For event timestamps
+import (
+	"fmt"  // For Printf in placeholder Execute
+	"time" // For event timestamps
+)
 
 // Event defines the interface for simulation events.
 type Event interface {
-	Timestamp() time.Time // When the event occurs
-	Type() string         // Type identifier string
-	GetTargetID() string  // ID of the node the event is intended for
+	Timestamp() time.Time            // When the event occurs
+	Type() string                    // Type identifier string
+	GetTargetID() string             // ID of the node the event is intended for
+	Execute(world interface{}) error // Perform the event's action
 	// Add other common methods if needed, e.g., SourceNodeID() string
 }
 
@@ -49,6 +53,16 @@ func NewTransactionCreatedEvent(ts time.Time, targetID, txID string) *Transactio
 		BaseEvent:     BaseEvent{OccursAt: ts, TargetID: targetID},
 		TransactionID: txID,
 	}
+}
+
+// Execute performs the action associated with the TransactionCreatedEvent.
+// Placeholder implementation.
+func (e *TransactionCreatedEvent) Execute(world interface{}) error {
+	// TODO: Implement actual event execution logic.
+	// This might involve finding the target node in the 'world'
+	// and calling a method on it, e.g., node.HandleTransactionCreated(e)
+	fmt.Printf("Executing TransactionCreatedEvent for Tx %s (Target: %s) - Placeholder\n", e.TransactionID, e.TargetID)
+	return nil // Return nil for now to satisfy the interface
 }
 
 // Add other event types later (BlockCreated, MessageSent, etc.)

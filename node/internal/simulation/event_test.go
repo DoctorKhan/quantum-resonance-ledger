@@ -3,6 +3,7 @@ package simulation
 import (
 	"testing"
 	"time"
+	// "fmt" // Removed as it's unused now
 )
 
 func TestEventCreation(t *testing.T) {
