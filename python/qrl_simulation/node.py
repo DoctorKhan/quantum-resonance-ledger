@@ -50,6 +50,27 @@ class Node:
         param = self.get_parameter(name)
         return param.sample() if param else None
 
+
+    def get_balance(self, token: str) -> float:
+        """Returns the balance for a specific token, defaulting to 0.0."""
+        return self.balances.get(token, 0.0)
+
+    def increase_balance(self, token: str, amount: float):
+        """Increases the balance for a specific token."""
+        if amount < 0:
+            raise ValueError("Cannot increase balance by a negative amount.")
+        self.balances[token] = self.balances.get(token, 0.0) + amount
+
+    def decrease_balance(self, token: str, amount: float):
+        """Decreases the balance for a specific token."""
+        if amount < 0:
+            raise ValueError("Cannot decrease balance by a negative amount. Use increase_balance.")
+        current_balance = self.balances.get(token, 0.0)
+        # For now, allow negative balances, but ideally check for sufficient funds
+        # if current_balance < amount:
+        #     raise ValueError(f"Insufficient balance of {token} ({current_balance}) to decrease by {amount}.")
+        self.balances[token] = current_balance - amount
+
     # TODO: Add event handling methods (deliver, process_inbox) later
     # def deliver(self, event: Event): ...
     # def process_inbox(self): ...

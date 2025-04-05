@@ -13,3 +13,4 @@ tests/test_distributions.py
 tests/test_node.py
 tests/test_parameters.py
 tests/test_quantum_blockchain_pytest.py
+tests/test_simulation_engine.py
