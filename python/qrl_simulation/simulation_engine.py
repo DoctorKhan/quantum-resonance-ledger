@@ -8,15 +8,25 @@ from .quantum_blockchain import QuantumBlockchain
 class SimulationEngine:
     """Manages the execution of the QRL simulation."""
 
-    def __init__(self, blockchain: QuantumBlockchain, config: Dict):
+    def __init__(self, blockchain: QuantumBlockchain = None, config: Dict = None):
         """
         Initializes the simulation engine.
 
         Args:
-            blockchain: An instance of the QuantumBlockchain.
+            blockchain: An instance of the QuantumBlockchain. If None, a default instance with 4 nodes is created.
             config: A dictionary containing simulation configuration,
-                    e.g., {'steps': 100}.
+                    e.g., {'steps': 100}. If None, a default config with 10 steps is used.
         """
+        # Create default blockchain if none provided
+        if blockchain is None:
+            initial_nodes = ["Node1", "Node2", "Node3", "Node4"]
+            blockchain = QuantumBlockchain(initial_nodes=initial_nodes)
+            # Add some basic network connections
+            blockchain.network.add_edges_from([("Node1", "Node2"), ("Node2", "Node3"), ("Node1", "Node3"), ("Node3", "Node4")])
+        
+        # Create default config if none provided
+        if config is None:
+            config = {'steps': 10}
         if not isinstance(blockchain, QuantumBlockchain):
             raise TypeError("blockchain must be an instance of QuantumBlockchain")
         if not isinstance(config, dict) or 'steps' not in config:

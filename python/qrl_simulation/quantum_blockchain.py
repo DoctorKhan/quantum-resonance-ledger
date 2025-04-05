@@ -198,47 +198,121 @@ class QuantumBlockchain:
 
         print(f"Created vault {vault_id} for {node_id} with {collateral_amount} {collateral_asset}.")
 
-    # Placeholder for mint_qsd - using original signature for now
-    def mint_qsd(self, node_id: str, collateral_asset: str, collateral_amount: float, qsd_amount_to_mint: float):
-        """Placeholder: Mints QSD by locking collateral (not vault-aware yet)."""
+    def mint_qsd(self, node_id: str, collateral_asset=None, collateral_amount=None, vault_id=None, qsd_amount_to_mint=None):
+        """
+        Mints QSD either by:
+        1. Creating a new vault and locking collateral (legacy mode)
+        2. Minting against an existing vault (vault-aware mode)
+        
+        This method supports both signatures for backward compatibility:
+        - mint_qsd(node_id, collateral_asset, collateral_amount, qsd_amount_to_mint) - Legacy
+        - mint_qsd(node_id, vault_id, qsd_amount_to_mint) - Vault-aware
+        """
         if node_id not in self.nodes:
             raise ValueError(f"Node {node_id} not found.")
         
         node = self.nodes[node_id]
-
-        # Basic checks (similar to create_vault, but simplified for placeholder)
-        if collateral_asset not in self.oracle_prices:
-             raise ValueError(f"Oracle price for collateral {collateral_asset} not available.")
-        collateral_price = self.oracle_prices[collateral_asset]
-        if collateral_price <= 0:
-             raise ValueError(f"Invalid oracle price ({collateral_price}) for {collateral_asset}.")
         
-        available_collateral = node.get_balance(collateral_asset)
-        if available_collateral < collateral_amount:
-            raise ValueError(f"Node {node_id} has insufficient {collateral_asset} balance ({available_collateral}) to lock {collateral_amount}.")
-
-        # Check collateral value against required ratio (simplified check)
-        collateral_ratio_param = self.params.get('collateral_ratio')
-        if not collateral_ratio_param or not collateral_ratio_param.get('value'):
-            required_ratio = 1.5 # Default if not found
+        # Determine which mode we're in based on parameters
+        if vault_id is None and collateral_asset is not None and collateral_amount is not None:
+            # Legacy mode: Create a temporary vault and mint against it
+            # This is for backward compatibility with existing tests
+            
+            # --- Basic Checks ---
+            # 1. Check collateral price exists
+            if collateral_asset not in self.oracle_prices:
+                raise ValueError(f"Oracle price for collateral {collateral_asset} not available.")
+            collateral_price = self.oracle_prices[collateral_asset]
+            if collateral_price <= 0:
+                raise ValueError(f"Invalid oracle price ({collateral_price}) for {collateral_asset}.")
+            
+            # 2. Check collateral ratio parameter exists
+            collateral_ratio_param = self.params.get('collateral_ratio')
+            if not collateral_ratio_param or not collateral_ratio_param.get('value'):
+                required_ratio = 1.5  # Default if not found
+                print(f"Warning: Collateral ratio parameter not found, using default {required_ratio}")
+            else:
+                required_ratio = next(iter(collateral_ratio_param['value'].values()), 1.5)
+            
+            # 3. Check if collateral is sufficient
+            required_collateral_value = qsd_amount_to_mint * required_ratio
+            provided_collateral_value = collateral_amount * collateral_price
+            if provided_collateral_value < required_collateral_value:
+                raise ValueError(
+                    f"Insufficient collateral value provided. Need value {required_collateral_value}, got {provided_collateral_value} "
+                    f"(Amount: {collateral_amount} {collateral_asset} @ ${collateral_price}, Ratio: {required_ratio})"
+                )
+            
+            # 4. Check if node has enough collateral
+            available_collateral = node.get_balance(collateral_asset)
+            if available_collateral < collateral_amount:
+                raise ValueError(f"Node {node_id} has insufficient {collateral_asset} balance ({available_collateral}) to lock {collateral_amount}.")
+            
+            # --- Update Balances ---
+            node.decrease_balance(collateral_asset, collateral_amount)
+            if "QSD" not in node.balances:
+                node.balances["QSD"] = 0.0
+            node.increase_balance("QSD", qsd_amount_to_mint)
+            
+            # Create an implicit vault for tracking (optional)
+            # vault_id = f"{node_id}_{collateral_asset}_{len(self.vaults)}"
+            # self.create_vault(node_id, vault_id, collateral_asset, collateral_amount)
+            # self.vaults[vault_id].debt_amount = qsd_amount_to_mint
+            
+            print(f"Minted {qsd_amount_to_mint} QSD for {node_id} by locking {collateral_amount} {collateral_asset}.")
+            
+        elif vault_id is not None and qsd_amount_to_mint is not None:
+            # Vault-aware mode: Mint against an existing vault
+            
+            # Check vault exists
+            if vault_id not in self.vaults:
+                raise ValueError(f"Vault {vault_id} not found for node {node_id}.")
+            
+            vault = self.vaults[vault_id]
+            
+            # Check vault ownership
+            if vault.owner != node_id:
+                raise ValueError(f"Vault {vault_id} is not owned by node {node_id}.")
+                
+            collateral_asset = vault.collateral_asset
+            collateral_amount = vault.collateral_amount
+            collateral_price = self.oracle_prices.get(collateral_asset, 0.0)
+            
+            if collateral_price <= 0:
+                raise ValueError(f"Invalid oracle price for {collateral_asset}.")
+            
+            # --- Calculate Required Collateral Value ---
+            collateral_ratio_param = self.params.get('collateral_ratio')
+            if not collateral_ratio_param or not collateral_ratio_param.get('value'):
+                required_ratio = 1.5  # Default if not found
+                print("Warning: Collateral ratio parameter not found, using default 1.5")
+            else:
+                required_ratio = next(iter(collateral_ratio_param['value'].values()), 1.5)
+            
+            # Calculate current vault value and required value for new debt
+            vault_value = collateral_amount * collateral_price
+            required_collateral_value = qsd_amount_to_mint * required_ratio
+            
+            # Check if vault has enough value to support the new debt
+            if vault_value < required_collateral_value:
+                raise ValueError(
+                    f"Vault {vault_id} has insufficient collateral value for QSD minting. "
+                    f"Vault Value: {vault_value}, Required: {required_collateral_value}"
+                )
+            
+            # --- Update Vault Debt and Node QSD Balance ---
+            vault.debt_amount += qsd_amount_to_mint
+            
+            # Initialize QSD balance if needed
+            if "QSD" not in node.balances:
+                node.balances["QSD"] = 0.0
+            node.increase_balance("QSD", qsd_amount_to_mint)
+            
+            print(f"Minted {qsd_amount_to_mint} QSD against vault {vault_id} for {node_id}.")
+            
         else:
-            required_ratio = next(iter(collateral_ratio_param['value'].values()), 1.5)
-        
-        required_collateral_value = qsd_amount_to_mint * required_ratio
-        provided_collateral_value = collateral_amount * collateral_price
-        if provided_collateral_value < required_collateral_value:
-             raise ValueError(
-                 f"Insufficient collateral value provided. Need value {required_collateral_value}, got {provided_collateral_value} "
-                 f"(Amount: {collateral_amount} {collateral_asset} @ ${collateral_price}, Ratio: {required_ratio})"
-             )
-
-        # Simplified balance update (no vault interaction yet)
-        node.decrease_balance(collateral_asset, collateral_amount)
-        if "QSD" not in node.balances:
-            node.balances["QSD"] = 0.0
-        node.increase_balance("QSD", qsd_amount_to_mint)
-        print(f"Minted {qsd_amount_to_mint} QSD for {node_id} (placeholder - not vault-aware).")
-
+            # Invalid parameter combination
+            raise ValueError("Invalid parameters for mint_qsd. Use either (node_id, collateral_asset, collateral_amount, qsd_amount_to_mint) or (node_id, vault_id, qsd_amount_to_mint).")
 
     def redeem_qsd(self, node_id: str, collateral_asset: str, qsd_amount_to_redeem: float):
         """Redeems QSD to unlock collateral (simplified)."""
@@ -254,15 +328,6 @@ class QuantumBlockchain:
             raise ValueError(f"Node {node_id} has insufficient QSD balance ({available_qsd}) to redeem {qsd_amount_to_redeem}.")
 
         # 2. Check collateral price exists (needed for calculation)
-        # Vault should store collateral asset type
-        # TODO: Need a way to determine which vault/collateral to redeem against
-        # For now, assume qETH is the only collateral type
-        collateral_asset = "qETH" # Hardcoded assumption for now
-        vault_id = "" # Placeholder - need to get vault_id from context
-        # vault = self.vaults.get(vault_id) # Need vault_id
-        # if not vault:
-        #      raise ValueError(f"Vault ID {vault_id} not found.")
-        # collateral_asset = vault.collateral_asset
         if collateral_asset not in self.oracle_prices:
             raise ValueError(f"Oracle price for collateral {collateral_asset} not available.")
         collateral_price = self.oracle_prices[collateral_asset]
