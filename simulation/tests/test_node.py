@@ -21,13 +21,16 @@ def test_node_creation(sample_params):
     assert node.position == position
     # Check initial zero balances per TDD plan
     assert node.balances == {"QUSD": 0.0, "QRG": 0.0, "Gas": 0.0}
-    assert node.quantity_imbalance == 0.0 # Default
+    assert node.quantity_imbalance == 0.0 # Changed from {} to 0.0
+    assert node.buy_propensity_fields == {}
+    assert node.sell_propensity_fields == {}
     assert len(node.neighbors) == 0
     assert len(node.parameters) == 2
     assert node.parameters["fee_rate"] == sample_params["fee_rate"]
     assert node.parameters["block_size"] == sample_params["block_size"]
     # Check updated string representation
-    expected_str = f"Node(ID: {node_id}, Pos: {position}, Balances: [QUSD: 0.00, QRG: 0.00, Gas: 0.00], Imbalance: 0.0000)"
+    expected_str = (f"Node(ID: {node_id}, Pos: {position}, "
+    				            f"Balances: [Gas: 0.00, QRG: 0.00, QUSD: 0.00], Q Imbalance: 0.0000)") # Updated imbalance format
     assert str(node) == expected_str
     assert repr(node) == f"Node('{node_id}')"
 
@@ -73,3 +76,58 @@ def test_node_parameter_access(sample_params):
     assert isinstance(fee_sample, float)
     assert 0.001 <= fee_sample <= 0.1 # Check bounds
     assert node.sample_parameter("non_existent") is None
+   
+# --- RTT Tests ---
+
+def test_node_rtt_initialization():
+    """Tests that RTT fields are initialized correctly."""
+    node = Node("NodeRTT")
+    assert node.buy_propensity_fields == {}
+    assert node.sell_propensity_fields == {}
+    assert node.quantity_imbalance == 0.0 # Changed from {} to 0.0
+
+def test_node_perturb_propensity_field():
+    """Tests the perturb_propensity_field method."""
+    node = Node("NodeRTT")
+    asset_id = "QRG"
+    price_range = (10.0, 11.0)
+    key = node._get_price_range_key(price_range)
+    magnitude1 = 0.5
+    magnitude2 = 0.3
+
+    # 1. Perturb buy field
+    node.perturb_propensity_field(asset_id, price_range, magnitude1, is_buy=True)
+    assert asset_id in node.buy_propensity_fields
+    assert key in node.buy_propensity_fields[asset_id]
+    assert node.buy_propensity_fields[asset_id][key] == pytest.approx(magnitude1)
+    assert node.sell_propensity_fields == {} # Sell field unchanged
+
+    # 2. Perturb buy field again (accumulation)
+    node.perturb_propensity_field(asset_id, price_range, magnitude2, is_buy=True)
+    assert node.buy_propensity_fields[asset_id][key] == pytest.approx(magnitude1 + magnitude2)
+
+    # 3. Perturb sell field
+    magnitude3 = 0.4
+    node.perturb_propensity_field(asset_id, price_range, magnitude3, is_buy=False)
+    assert asset_id in node.sell_propensity_fields
+    assert key in node.sell_propensity_fields[asset_id]
+    assert node.sell_propensity_fields[asset_id][key] == pytest.approx(magnitude3)
+    assert node.buy_propensity_fields[asset_id][key] == pytest.approx(magnitude1 + magnitude2) # Buy field unchanged
+
+    # 4. Test invalid inputs
+    with pytest.raises(ValueError, match="Perturbation magnitude cannot be negative"):
+        node.perturb_propensity_field(asset_id, price_range, -0.1, is_buy=True)
+
+    with pytest.raises(ValueError, match="Invalid price_range format"):
+        node.perturb_propensity_field(asset_id, (10.0,), 0.1, is_buy=True) # Not a tuple of 2
+
+    with pytest.raises(ValueError, match="Invalid price_range format"):
+        node.perturb_propensity_field(asset_id, (11.0, 10.0), 0.1, is_buy=True) # min > max
+
+    with pytest.raises(ValueError, match="Asset ID cannot be empty"):
+        node.perturb_propensity_field("", price_range, 0.1, is_buy=True)
+
+# TODO: Add tests for attempt_local_settlement once implemented
+# TODO: Add tests for propagate_rtt_state once implemented
+
+# --- End RTT Tests ---

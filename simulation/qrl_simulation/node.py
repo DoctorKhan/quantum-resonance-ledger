@@ -20,9 +20,14 @@ class Node:
         # Ledger state (simplified for now)
         # Balances for different token types (initialized to zero per TDD plan)
         self.balances: Dict[str, float] = {"QUSD": 0.0, "QRG": 0.0, "Gas": 0.0}
-        # TODO: Track imbalance per token type
+        # Quantity imbalance per token type
         self.quantity_imbalance: float = 0.0
-
+      
+        # RTT State
+        # Propensity fields: Dict[asset_id, Dict[price_range_key, density]]
+        # Price range key could be f"{min_price:.2f}-{max_price:.2f}"
+        self.buy_propensity_fields: Dict[str, Dict[str, float]] = {}
+        self.sell_propensity_fields: Dict[str, Dict[str, float]] = {}
         # Simulation state
         # TODO: Add inbox for event-driven simulation
         # self.inbox: List[Event] = []
@@ -71,14 +76,51 @@ class Node:
         #     raise ValueError(f"Insufficient balance of {token} ({current_balance}) to decrease by {amount}.")
         self.balances[token] = current_balance - amount
 
+    # --- RTT Methods ---
+   
+    def _get_price_range_key(self, price_range: Tuple[float, float]) -> str:
+        """Helper to create a consistent key for price ranges."""
+        # TODO: Consider precision and edge cases
+        if not isinstance(price_range, tuple) or len(price_range) != 2 or price_range[0] > price_range[1]:
+            raise ValueError(f"Invalid price_range format: {price_range}. Expected (min, max).")
+        return f"{price_range[0]:.2f}-{price_range[1]:.2f}"
+   
+    def perturb_propensity_field(self, asset_id: str, price_range: Tuple[float, float], magnitude: float, is_buy: bool):
+        """
+        Increases the density in the specified propensity field (buy or sell)
+        for the given asset and price range.
+        """
+        if magnitude < 0:
+            raise ValueError("Perturbation magnitude cannot be negative.")
+        if not asset_id:
+            raise ValueError("Asset ID cannot be empty.")
+   
+        key = self._get_price_range_key(price_range)
+        target_field = self.buy_propensity_fields if is_buy else self.sell_propensity_fields
+   
+        if asset_id not in target_field:
+            target_field[asset_id] = {}
+   
+        target_field[asset_id][key] = target_field[asset_id].get(key, 0.0) + magnitude
+        # TODO: Add normalization or constraints if density represents probability
+   
+    # TODO: Add attempt_local_settlement method
+    # TODO: Add propagate_rtt_state method
+   
+    # --- End RTT Methods ---
+   
+   
     # TODO: Add event handling methods (deliver, process_inbox) later
     # def deliver(self, event: Event): ...
     # def process_inbox(self): ...
     # def _handle_..._event(self, event): ...
 
     def __str__(self) -> str:
-        balances_str = ", ".join(f"{token}: {bal:.2f}" for token, bal in self.balances.items())
-        return f"Node(ID: {self.node_id}, Pos: {self.position}, Balances: [{balances_str}], Imbalance: {self.quantity_imbalance:.4f})"
+        balances_str = ", ".join(f"{token}: {bal:.2f}" for token, bal in sorted(self.balances.items()))
+        imbalance_str = f"{self.quantity_imbalance:.4f}" # Updated to handle float
+        # TODO: Add propensity field summary to __str__ if useful
+        return (f"Node(ID: {self.node_id}, Pos: {self.position}, "
+                f"Balances: [{balances_str}], Q Imbalance: {imbalance_str})") # Adjusted formatting
 
     def __repr__(self) -> str:
         return f"Node('{self.node_id}')"

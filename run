@@ -3,23 +3,36 @@
 # Exit immediately if a command exits with a non-zero status.
 set -e
 
-# Check if the first argument is "test"
-if [ "$1" == "test" ]; then
-#  echo "Running Go tests..."
-  # Run Go tests in all subdirectories using the pretty formatter
-  #./scripts/pretty-test ./...
-
-  echo "" # Add a newline for separation
-  echo "Running Python tests..."
-  # Run Python tests using pytest
-  # Ensure PYTHONPATH includes the project root so the import works
-  PYTHONPATH=. pytest python/test/test_quantum_blockchain_pytest.py
-
-  echo ""
-  echo "All tests completed."
-else
-  echo "Usage: ./run test"
-  exit 1
-fi
+# Check the command argument
+case "$1" in
+  gotest)
+    echo "Running Go tests..."
+    # Run Go tests in the 'node' directory using the pretty formatter
+    # Ensure the script path is correct relative to the project root
+    (cd node && ./scripts/pretty-test ./...)
+    echo "Go tests completed."
+    ;;
+  pytest)
+    echo "Running Python tests..."
+    # Run Python tests using pytest in the 'simulation/tests' directory
+    # Ensure PYTHONPATH includes the project root so imports work
+    # Assuming pytest is installed in the environment
+    PYTHONPATH=simulation pytest simulation/tests/
+    echo "Python tests completed."
+    ;;
+  test)
+    echo "Running Go tests..."
+    (cd node && ./scripts/pretty-test ./...)
+    echo "" # Add a newline for separation
+    echo "Running Python tests..."
+    PYTHONPATH=simulation pytest simulation/tests/
+    echo ""
+    echo "All tests completed."
+    ;;
+  *)
+    echo "Usage: $0 {gotest|pytest|test}"
+    exit 1
+    ;;
+esac
 
 exit 0
