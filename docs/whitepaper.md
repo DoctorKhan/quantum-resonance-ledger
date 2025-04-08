@@ -55,6 +55,12 @@ The **Quantum Resonance Governance (QRG)** token is the backbone of the QRL ecos
 
 The WSI maintains a stable value within 0.01% of $1 through a dynamically rebalanced portfolio of bridged stablecoins (e.g., qUSDC, qDAI). QRG plays a critical role by acting as a reserve asset and enabling governance over WSI parameters. This mechanism offers enhanced stability compared to traditional stablecoins like USDT and USDC, which have experienced brief de-pegging incidents.
 
+## Reflexive Resonance Trading (RRT)
+Building upon QRL’s physics-inspired dynamics, Reflexive Resonance Trading (RRT) offers a
+probabilistic, high-performance approach to on-chain trading. It replaces rigid order book
+mechanisms with localized settlement events and parallel processing, aiming for faster execution
+and better scalability. See [docs/rtt.md](./rtt.md) for more details on this concept.
+
 **Conclusion:**
 
 QRL is a transformative blockchain platform designed to meet the demands of the next generation of decentralized applications. By embedding critical functionalities like the WSI for stable value and leveraging probabilistic processing for scalability, QRL delivers unmatched performance and adaptability. The QRG token is central to this ecosystem, capturing value through governance, staking, and fee distribution. For investors, QRL represents a compelling opportunity to participate in a blockchain platform built for long-term growth and innovation.

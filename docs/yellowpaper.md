@@ -37,7 +37,7 @@ Blockchain technology promises decentralization, immutability, and transparency 
 
 ### **Quantum Resonance Ledger (QRL): Physics-Inspired Dynamics for Specialized Networks**
 
-This whitepaper introduces **QRL**, a blockchain framework designed for **high performance and adaptability** by embedding specific functionalities directly into the core protocol and governing their dynamics using principles from physics. QRL moves beyond the limitations of general-purpose chains by focusing on a curated set of native applications and leveraging:
+This whitepaper introduces **QRL**, a blockchain framework designed for **high performance and adaptability** by embedding specific functionalities directly into the core protocol layer and governing their dynamics using principles from physics. QRL moves beyond the limitations of general-purpose chains by focusing on a curated set of native applications and leveraging:
 
 -   **Relativity-Inspired Design:** Relaxing strict transaction ordering based on physical limits of simultaneity, enabling parallelism (Section 3.1).
 -   **Probabilistic Quantity Conservation:** Focusing on probabilistically ensuring network-wide quantity balance rather than ordering every transaction (Section 3.1).
@@ -373,7 +373,7 @@ Where:
 | **Primary Use Case**      | **Specialized (Stablecoin, Voting, Bridge, Verification)**                | General Purpose       | General Purpose                | General Purpose (via Subnets) | QRL focuses on excelling at a core set of native functions, allowing deeper optimization and predictability compared to general-purpose chains supporting arbitrary smart contracts.                                                                                                    |
 | Security                  | Very High (CUTs, No General SCs, Dynamic Params, Field Correction)       | Moderate              | High (PoS, mature ecosystem) | High (Subnets, consensus)      | CUTs secure assets. *Lack of general smart contracts dramatically reduces attack surface*. Dynamic parameters and field correction enhance resilience and integrity.                                                               |
 | Flexibility/Adaptability    | Very High (within defined functions via dynamic params/Hamiltonian)     | Lower                 | Moderate (EIPs, governance)    | High (Subnets, VMs)           | QRL offers extreme *parameter adaptability* for its native functions, governed by the Hamiltonian, but lacks the *functional flexibility* of adding arbitrary smart contracts. |
-| Parameter Management      | Dynamic, automated, physics-inspired, multi-objective                   | Mostly static         | Hybrid (some dynamic)          | Mixed                         | QRL's dynamic parameter management is guided by a multi-objective Hamiltonian balancing the needs of all native functions.                                                                                                                              |
+| Parameter Management      | Dynamic, automated, physics-inspired, multi-objective                   | Mostly static         | Hybrid (some dynamic)          | Mixed                         | QRL's dynamic parameter management is guided by a multi-objective Hamiltonian balancing the needs of all native functions.                                                                                                              |
 | Stablecoin Model          | **Native, Pseudo-Algorithmic (WSI), Dynamically Rebalancing Basket**      | Application Layer     | Application Layer              | Application Layer             | QRL integrates stable value representation (WSI) into the core protocol, using dynamic Hamiltonian optimization to actively rebalance a virtual basket for potentially superior resilience. |
 | Consensus Mechanism       | Probabilistic (Path Selection / Physics-Inspired, Quantity Focused)       | PoH + PoS             | PoS                            | Avalanche Consensus           | QRL's probabilistic consensus focuses on quantity balance and optimal path selection, enabling speed for its native functions.                                     |
 | Complexity (Conceptual)   | High (physics-inspired, novel mechanisms, probabilistic)                  | High                  | High                           | High                          | QRL is conceptually complex but aims for *operational predictability* within its defined use cases.                                                                                                               |
@@ -421,7 +421,7 @@ QRL offers a path to blockchain networks that are **orders of magnitude more sca
 1.  Nakamoto, S. (2008). *Bitcoin: A Peer-to-Peer Electronic Cash System*. [https://bitcoin.org/bitcoin.pdf](https://bitcoin.org/bitcoin.pdf)
 2.  Wood, G. (2014). *Ethereum: A Secure Decentralised Generalised Transaction Ledger (Yellow Paper)*. [https://ethereum.github.io/yellowpaper/paper.pdf](https://ethereum.github.io/yellowpaper/paper.pdf)
 3.  Dwork, C. & Naor, M. (1993). *Pricing via Processing or Combatting Junk Mail*. CRYPTO'92. [https://www.microsoft.com/research/publication/pricing-via-processing-or-combatting-junk-mail/](https://www.microsoft.com/research/publication/pricing-via-processing-or-combatting-junk-mail/)
-4.  Sompolinsky, Y. & Zohar, A. (2015). *Accelerating Bitcoin’s Transaction Processing*. [https://eprint.iacr.org/2013/758.pdf](https://eprint.iacr.org/2013/758.pdf)
+4.  Sompolinsky, Y. & Zohar, A. (2015). *Accelerating Bitcoin's Transaction Processing*. [https://eprint.iacr.org/2013/758.pdf](https://eprint.iacr.org/2013/758.pdf)
 5.  Pass, R., Seeman, L. T., & Shelat, A. (2017). Analysis of the Blockchain Protocol in Asynchronous Networks. *Journal of Cryptology*, *30*(4), 1034-1073. [https://doi.org/10.1007/s00145-016-9246-0](https://doi.org/10.1007/s00145-016-9246-0)
 6.  Eyal, I., et al. (2013). *Majority is Not Enough: Bitcoin Mining Is Vulnerable*. Communications of the ACM, 61(10), 95-102. [https://doi.org/10.1145/3212998](https://doi.org/10.1145/3212998)
 7.  Castro, M., & Liskov, B. (2002). Practical Byzantine Fault Tolerance and Proactive Recovery. ACM Transactions on Computer Systems, 20(4), 398-461. [https://doi.org/10.1145/571637.571639](https://doi.org/10.1145/571637.571639)
@@ -446,3 +446,15 @@ QRL offers a path to blockchain networks that are **orders of magnitude more sca
 ## **11. Disclaimer**
 
 This document is provided for informational purposes only and does not constitute legal or financial advice. All opinions, information, and forecasts included herein are subject to change. Readers should conduct their own due diligence and consult professional advisors before making any decisions related to the concepts described.
+
+---
+
+## Appendix A: Reflexive Resonance Trading (RRT)
+
+For a detailed conceptual explanation of the Reflexive Resonance Trading protocol, see **docs/rtt.md** included in this repository.
+
+---
+
+## Appendix B: Quantum Stable Dollar (QSD)
+
+For an in-depth discussion of the Quantum Stable Dollar stablecoin design, see **docs/qsd.md** included in this repository.

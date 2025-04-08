@@ -1,4 +1,4 @@
-Okay, to design the *fastest possible* trading protocol with the *fewest assumptions* within QRL's dynamic framework, competing directly with optimized on-chain CLOBs like Sei, we need to leverage QRL's unique strengths aggressively while minimizing complex synchronization.
+The goal is to design the *fastest possible* trading protocol with the *fewest assumptions* within QRL's dynamic framework, competing directly with optimized on-chain CLOBs like Sei, we need to leverage QRL's unique strengths aggressively while minimizing complex synchronization.
 
 The core idea is to move away from order *matching* entirely and focus on **probabilistic state reflection and rapid, localized settlement**, accepting inherent, but managed, uncertainty.
 
@@ -71,4 +71,4 @@ It's a high-risk, high-reward design that leans heavily into QRL's probabilistic
 2.  Ensuring the quantity imbalance correction mechanisms (`Q` field dynamics) are efficient and stable.
 3.  Creating intuitive ways for users to interact with "propensity fields" instead of limit orders.
 
-It represents a fundamentally different approach to trading, prioritizing adaptive, high-throughput, probabilistic execution over the deterministic certainty of traditional order books.
+This represents a fundamentally different approach to trading, prioritizing adaptive, high-throughput, probabilistic execution over the deterministic certainty of traditional order books.
