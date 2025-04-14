@@ -67,6 +67,8 @@ The current Go simulation (`go/cmd/simulation/`) demonstrates key aspects of QRL
 
 ## Getting Started
 
+See [Installation Instructions](docs/installation.md) for details on how to install, set up, and run the QRL node.
+
 *(Add prerequisites and build/run instructions here)*
 
 **Prerequisites:**
