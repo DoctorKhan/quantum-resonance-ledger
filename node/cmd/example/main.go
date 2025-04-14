@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/khan/qrib/pkg/paramspace"
+	"quantum-resonance-ledger/node/pkg/paramspace"
 )
 
 func main() {

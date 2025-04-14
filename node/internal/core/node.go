@@ -129,3 +129,17 @@ func (n *Node) handleTransactionCreated(event *TransactionCreatedEvent) {
 	// fmt.Printf("Node %s handling TransactionCreated: %s\n", n.ID, event.TransactionID)
 	n.ProcessedEventCount++
 }
+func (n *Node) CalculateWSI() float64 {
+	// WSI calculation logic implementation
+	// Calculate the WSI value based on the node's balances and latency factors
+	wsiValue := 0.0
+	for asset, balance := range n.Balances {
+		// Calculate the asset's contribution to the WSI value
+		wsiContribution := balance * n.LatencyFactors[asset]
+		// Update the WSI value
+		wsiValue += wsiContribution
+	}
+	return wsiValue
+	// TO DO: implement WSI calculation logic
+	return 0.0
+}

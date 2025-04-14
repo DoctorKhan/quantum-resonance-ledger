@@ -44,8 +44,4 @@ func NewBlock(header *BlockHeader, txs []*Transaction) *Block {
 
 // --- Helper Type ---
 
-// Hash represents a 32-byte hash.
-// Placeholder - consider using a fixed-size array type from a crypto library.
-type Hash [32]byte
-
 // TODO: Add helper functions for Hash type (e.g., String(), Bytes(), SetBytes())

@@ -31,17 +31,13 @@ func TestQSD_Minting(t *testing.T) {
 	collateralAmount := uint64(2000000000000000000) // 2 qETH
 	qsdToMint := uint64(1000)                       // Mint 1000 QSD
 
-	t.Run("MintPlaceholder", func(t *testing.T) {
+	t.Run("Mint", func(t *testing.T) {
 		err := manager.Mint(owner, collateralType, collateralID, collateralAmount, qsdToMint)
-
-		// Expecting "not implemented" error from placeholder
-		if err == nil {
-			t.Errorf("Expected placeholder Mint function to return an error, but got nil")
-		} else {
-			t.Logf("Got expected error from placeholder Mint: %v", err)
+		if err != nil {
+			t.Errorf("Expected Mint function to return no error, but got %v", err)
 		}
 
-		// Basic check if vault was created by placeholder logic
+		// Basic check if vault was created
 		manager.mu.RLock()
 		vaultExists := false
 		if ownerVaults, ok := manager.vaults[owner]; ok {
@@ -51,7 +47,15 @@ func TestQSD_Minting(t *testing.T) {
 		}
 		manager.mu.RUnlock()
 		if !vaultExists {
-			t.Errorf("Placeholder Mint logic did not create the vault entry")
+			t.Errorf("Mint logic did not create the vault entry")
+		}
+
+		// Call Mint with placeholder owner and expect an error
+		err = manager.Mint("placeholder", collateralType, collateralID, collateralAmount, qsdToMint)
+		if err == nil {
+			t.Errorf("Expected Mint function to return an error for placeholder owner, but got nil")
+		} else {
+			t.Logf("Got expected error from Mint for placeholder owner: %v", err)
 		}
 		// TODO: Add checks for collateral ratio, state updates etc. once implemented
 	})
@@ -73,14 +77,18 @@ func TestQSD_Burning(t *testing.T) {
 	// Setup: Mint first (using placeholder which creates vault entry)
 	_ = manager.Mint(owner, collateralType, collateralID, collateralAmount, qsdMinted)
 
-	t.Run("BurnPlaceholder", func(t *testing.T) {
+	t.Run("Burn", func(t *testing.T) {
 		err := manager.Burn(owner, collateralType, qsdToRepay)
+		if err != nil {
+			t.Errorf("Expected Burn function to return no error, but got %v", err)
+		}
 
-		// Expecting "not implemented" error from placeholder
+		// Call Burn with placeholder owner and expect an error
+		err = manager.Burn("placeholder", collateralType, qsdToRepay)
 		if err == nil {
-			t.Errorf("Expected placeholder Burn function to return an error, but got nil")
+			t.Errorf("Expected Burn function to return an error for placeholder owner, but got nil")
 		} else {
-			t.Logf("Got expected error from placeholder Burn: %v", err)
+			t.Logf("Got expected error from Burn for placeholder owner: %v", err)
 		}
 		// TODO: Add checks for debt reduction, collateral unlock etc. once implemented
 	})
