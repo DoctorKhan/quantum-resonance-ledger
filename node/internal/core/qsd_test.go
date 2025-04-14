@@ -60,7 +60,27 @@ func TestQSD_Minting(t *testing.T) {
 		// TODO: Add checks for collateral ratio, state updates etc. once implemented
 	})
 
-	// TODO: Add tests for invalid inputs (zero amount, etc.)
+	t.Run("MintInvalidInputs", func(t *testing.T) {
+		// Zero amount
+		err := manager.Mint(owner, collateralType, collateralID, collateralAmount, 0)
+		if err == nil {
+			t.Errorf("Expected Mint function to return an error for zero amount, but got nil")
+		} else {
+			t.Logf("Got expected error from Mint for zero amount: %v", err)
+		}
+	})
+
+	t.Run("MintInsufficientCollateral", func(t *testing.T) {
+		// Insufficient collateral
+		qsdToMint := uint64(10000) // Mint 10000 QSD
+		err := manager.Mint(owner, collateralType, collateralID, collateralAmount, qsdToMint)
+		if err == nil {
+			t.Errorf("Expected Mint function to return an error for insufficient collateral, but got nil")
+		} else {
+			t.Logf("Got expected error from Mint for insufficient collateral: %v", err)
+		}
+	})
+
 	// TODO: Add tests for insufficient collateral once implemented
 }
 
@@ -101,6 +121,14 @@ func TestQSD_Burning(t *testing.T) {
 		err = manager.Burn(owner, "qBTC", qsdToRepay) // Correct owner, wrong collateral type
 		if err == nil {
 			t.Errorf("Expected error when burning from non-existent collateral type vault, but got nil")
+		}
+
+		// Zero amount
+		err = manager.Burn(owner, collateralType, 0)
+		if err == nil {
+			t.Errorf("Expected Burn function to return an error for zero amount, but got nil")
+		} else {
+			t.Logf("Got expected error from Burn for zero amount: %v", err)
 		}
 	})
 

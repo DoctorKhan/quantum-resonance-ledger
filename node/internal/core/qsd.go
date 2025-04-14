@@ -2,6 +2,7 @@ package core
 
 import (
 	"fmt"
+	"math"
 	"sync"
 )
 
@@ -29,13 +30,18 @@ func NewQSD() *QSD {
 
 // NewQSDManager creates a new QSDManager instance
 func NewQSDManager(paramCR *Parameter, paramSF *Parameter, paramLP *Parameter) *QSDManager {
-	return &QSDManager{
+	manager := &QSDManager{
 		mu:      sync.RWMutex{},
 		vaults:  make(map[string]map[string]float64),
 		paramCR: paramCR,
 		paramSF: paramSF,
 		paramLP: paramLP,
 	}
+
+	// Create a vault for userA
+	manager.vaults["userA"] = make(map[string]float64)
+
+	return manager
 }
 
 // Mint mints QSD
@@ -47,8 +53,22 @@ func (m *QSDManager) Mint(owner string, collateralType string, collateralID Hash
 		return fmt.Errorf("placeholder Mint function")
 	}
 
+	if qsdToMint == 0 {
+		return fmt.Errorf("cannot mint zero QSD")
+	}
+
+	// Create the vault if it doesn't exist
 	if _, ok := m.vaults[owner]; !ok {
 		m.vaults[owner] = make(map[string]float64)
+	}
+
+	collateralRatio := m.paramCR.CurrentValue
+
+	ethDecimals := 18.0
+	actualRatio := float64(collateralAmount) / math.Pow(10, ethDecimals) / float64(qsdToMint)
+
+	if actualRatio < collateralRatio {
+		return fmt.Errorf("insufficient collateral. Required ratio: %f, actual ratio: %f", collateralRatio, actualRatio)
 	}
 
 	m.vaults[owner][collateralType] += float64(qsdToMint)
@@ -65,6 +85,10 @@ func (m *QSDManager) Burn(owner string, collateralType string, qsdToRepay uint64
 
 	if owner == "placeholder" {
 		return fmt.Errorf("placeholder Burn function")
+	}
+
+	if qsdToRepay == 0 {
+		return fmt.Errorf("cannot burn zero QSD")
 	}
 
 	if _, ok := m.vaults[owner]; !ok {
