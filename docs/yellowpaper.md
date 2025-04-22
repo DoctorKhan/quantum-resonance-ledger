@@ -143,10 +143,10 @@ QRL employs an extended **Hamiltonian/Cost Function** $H(S)$ quantifying the cos
 
 $$
 \begin{aligned}
-H(S) &= w_{\text{peg}} \cdot \text{Penalty}_{\text{WSI\_Peg}}(S) \\
-     &+ \sum_{f \neq \text{Stable}} w_f \cdot \text{Cost}_f(S) \\
-     &+ \lambda_{\text{unc}} \cdot \text{Penalty}_{\text{Uncertainty}}(\Theta) \\
-     &+ \lambda_Q \cdot \text{Penalty}_{\text{Imbalance}}(Q)
+H(S) &= w_{\mathrm{peg}} \cdot \mathrm{Penalty}_{\mathrm{WSI\_Peg}}(S) \\
+     &\quad + \sum_{f \neq \mathrm{Stable}} w_f \cdot \mathrm{Cost}_f(S) \\
+     &\quad + \lambda_{\mathrm{unc}} \cdot \mathrm{Penalty}_{\mathrm{Uncertainty}}(\Theta) \\
+     &\quad + \lambda_Q \cdot \mathrm{Penalty}_{\mathrm{Imbalance}}(Q)
 \end{aligned}
 $$
 
@@ -297,10 +297,10 @@ Where:
 Balances objectives across all functions:
 $$
 \begin{aligned}
-H(S) &= w_{\text{peg}} \cdot \text{Penalty}_{\text{WSI\_Peg}}(S) \\
-     &+ \sum_{f} w_f \cdot \text{Cost}_f(S) \\
-     &+ \lambda_{\text{unc}} \cdot \text{Penalty}_{\text{Uncertainty}}(\Theta) \\
-     &+ \lambda_Q \cdot \text{Penalty}_{\text{Imbalance}}(Q)
+H(S) &= w_{\mathrm{peg}} \cdot \mathrm{Penalty}_{\mathrm{WSI\_Peg}}(S) \\
+     &\quad + \sum_{f} w_f \cdot \mathrm{Cost}_f(S) \\
+     &\quad + \lambda_{\mathrm{unc}} \cdot \mathrm{Penalty}_{\mathrm{Uncertainty}}(\Theta) \\
+     &\quad + \lambda_Q \cdot \mathrm{Penalty}_{\mathrm{Imbalance}}(Q)
 \end{aligned}
 $$
 
