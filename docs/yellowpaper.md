@@ -141,14 +141,14 @@ where $\Delta \theta_i$ is the standard deviation of parameter $\theta_i$. This 
 
 QRL employs an extended **Hamiltonian/Cost Function** $H(S)$ quantifying the cost of the *entire system state* $S = \{\Theta, Q, V, B, Vf, WSI_{state}, ...\}$:
 
-$$
+```math
 \begin{aligned}
-H(S) &= w_{\mathrm{peg}} \cdot \mathrm{Penalty}_{\mathrm{WSI\_Peg}}(S) \\
-     &\quad + \sum_{f \neq \mathrm{Stable}} w_f \cdot \mathrm{Cost}_f(S) \\
-     &\quad + \lambda_{\mathrm{unc}} \cdot \mathrm{Penalty}_{\mathrm{Uncertainty}}(\Theta) \\
-     &\quad + \lambda_Q \cdot \mathrm{Penalty}_{\mathrm{Imbalance}}(Q)
+H(S) &= w_{\mathrm{peg}} \cdot \mathrm{Penalty}_{\mathrm{WSI_Peg}}(S) \\
+&\quad + \sum_{f \neq \mathrm{Stable}} w_f \cdot \mathrm{Cost}_f(S) \\
+&\quad + \lambda_{\mathrm{unc}} \cdot \mathrm{Penalty}_{\mathrm{Uncertainty}}(\Theta) \\
+&\quad + \lambda_Q \cdot \mathrm{Penalty}_{\mathrm{Imbalance}}(Q)
 \end{aligned}
-$$
+```
 
 -   Includes a strong penalty $w_{\mathrm{peg}} \cdot \mathrm{Penalty}_{\mathrm{WSI\_Peg}}$ for the WSI value deviating from its peg, dependent on oracle prices and target weights $\theta_w \in \Theta$.
 -   Balances objectives across all native functions via weights $w_f$.
@@ -295,14 +295,14 @@ Where:
 ### **4.5 Extended Hamiltonian Cost Function $H(S)$**
 
 Balances objectives across all functions:
-$$
+```math
 \begin{aligned}
-H(S) &= w_{\mathrm{peg}} \cdot \mathrm{Penalty}_{\mathrm{WSI\_Peg}}(S) \\
-     &\quad + \sum_{f} w_f \cdot \mathrm{Cost}_f(S) \\
-     &\quad + \lambda_{\mathrm{unc}} \cdot \mathrm{Penalty}_{\mathrm{Uncertainty}}(\Theta) \\
-     &\quad + \lambda_Q \cdot \mathrm{Penalty}_{\mathrm{Imbalance}}(Q)
+H(S) &= w_{\mathrm{peg}} \cdot \mathrm{Penalty}_{\mathrm{WSI_Peg}}(S) \\
+&\quad + \sum_{f} w_f \cdot \mathrm{Cost}_f(S) \\
+&\quad + \lambda_{\mathrm{unc}} \cdot \mathrm{Penalty}_{\mathrm{Uncertainty}}(\Theta) \\
+&\quad + \lambda_Q \cdot \mathrm{Penalty}_{\mathrm{Imbalance}}(Q)
 \end{aligned}
-$$
+```
 
 Where:
 - $\text{Cost}_f(S)$: Cost associated with native function $f$ (Stablecoin peg, Voting health, Bridge security, Verification load, Network congestion).
