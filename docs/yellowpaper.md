@@ -142,7 +142,12 @@ where $\Delta \theta_i$ is the standard deviation of parameter $\theta_i$. This 
 QRL employs an extended **Hamiltonian/Cost Function** $H(S)$ quantifying the cost of the *entire system state* $S = \{\Theta, Q, V, B, Vf, WSI_{state}, ...\}$:
 
 $$
-H(S) = w_{\text{peg}} \cdot \text{Penalty}_{\text{WSI\_Peg}}(S) + \sum_{f \neq \text{Stable}} w_f \cdot \text{Cost}_f(S) + \lambda_{\text{unc}} \cdot \text{Penalty}_{\text{Uncertainty}}(\Theta) + \lambda_Q \cdot \text{Penalty}_{\text{Imbalance}}(Q)
+\begin{align*}
+H(S) &= w_{\text{peg}} \cdot \text{Penalty}_{\text{WSI\_Peg}}(S) \\
+     &+ \sum_{f \neq \text{Stable}} w_f \cdot \text{Cost}_f(S) \\
+     &+ \lambda_{\text{unc}} \cdot \text{Penalty}_{\text{Uncertainty}}(\Theta) \\
+     &+ \lambda_Q \cdot \text{Penalty}_{\text{Imbalance}}(Q)
+\end{align*}
 $$
 
 -   Includes a strong penalty $w_{\text{peg}} \cdot \text{Penalty}_{\text{WSI\_Peg}}$ for the WSI value deviating from its peg, dependent on oracle prices and target weights $\theta_w \in \Theta$.
@@ -291,7 +296,12 @@ Where:
 
 Balances objectives across all functions:
 $$
-H(S) = w_{\text{peg}} \cdot \text{Penalty}_{\text{WSI\_Peg}}(S) + \sum_{f} w_f \cdot \text{Cost}_f(S) + \lambda_{\text{unc}} \cdot \text{Penalty}_{\text{Uncertainty}}(\Theta) + \lambda_Q \cdot \text{Penalty}_{\text{Imbalance}}(Q)
+\begin{align*}
+H(S) &= w_{\text{peg}} \cdot \text{Penalty}_{\text{WSI\_Peg}}(S) \\
+     &+ \sum_{f} w_f \cdot \text{Cost}_f(S) \\
+     &+ \lambda_{\text{unc}} \cdot \text{Penalty}_{\text{Uncertainty}}(\Theta) \\
+     &+ \lambda_Q \cdot \text{Penalty}_{\text{Imbalance}}(Q)
+\end{align*}
 $$
 
 Where:
