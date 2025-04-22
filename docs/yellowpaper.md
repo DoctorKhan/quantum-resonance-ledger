@@ -150,7 +150,7 @@ H(S) &= w_{\text{peg}} \cdot \text{Penalty}_{\text{WSI\_Peg}}(S) \\
 \end{align*}
 $$
 
--   Includes a strong penalty $w_{\text{peg}} \cdot \text{Penalty\_WSI\_Peg}}$ for the WSI value deviating from its peg, dependent on oracle prices and target weights $\theta_w \in \Theta$.
+-   Includes a strong penalty $w_{\text{peg}} \cdot \text{Penalty}_{\text{WSI\_Peg}}$ for the WSI value deviating from its peg, dependent on oracle prices and target weights $\theta_w \in \Theta$.
 -   Balances objectives across all native functions via weights $w_f$.
 
 ### **3.8 Probabilistic Finality and Path Selection Consensus**
